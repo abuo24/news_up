@@ -1,0 +1,16 @@
+.bars {
+    display: none!important;
+}
+
+@media screen and (max-width: 700px) {
+    .item_nav {
+       display: none!important;
+    }
+    .bars {
+        display: inline-block!important;
+        float: right;
+        margin-top: 1.5rem;
+        align-items:center;
+        justify-content: right;
+    }
+}
