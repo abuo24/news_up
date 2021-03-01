@@ -13,8 +13,6 @@ class BlogContentItem extends Component {
         res => console.log(res), err => console.log(err)
     )
   }
-
-
   render() {
         const {post, posts} = this.props;
         return (
