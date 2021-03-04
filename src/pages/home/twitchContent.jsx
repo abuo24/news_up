@@ -1,13 +1,23 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
-import {BsFillHeartFill, FaComment, FaEnvelope, FiInstagram, GrYoutube, IoLogoTwitter, WiTime9} from "react-icons/all";
+import {
+    BsFillHeartFill,
+    BsHeart,
+    FaComment,
+    FaEnvelope,
+    FiInstagram,
+    GrYoutube,
+    IoLogoTwitter,
+    WiTime9
+} from "react-icons/all";
 import {MiddleHomeCards, MiniCard} from "../index";
 import {connect} from "react-redux";
 import {getFile} from "../../server/host";
 import Slider from "react-slick";
 import {bindActionCreators} from "redux";
-import {getCategories, getNewsByCategoryId} from "../../redux/actions/categoryApi";
+import {getCategories} from "../../redux/actions/categoryApi";
+import {postsApi} from "../../redux/service/postsApi";
 
 class TwitchContent extends Component {
 
@@ -33,7 +43,7 @@ class TwitchContent extends Component {
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId} title={item.title}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
-        const getMiddleHomeCards = this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.slice(0, 2).map((item, key) => (
+        const getMiddleHomeCards = this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map((item, key) => (
             <MiddleHomeCards key={key} category={item}/>));
 
         const settings = {
@@ -62,39 +72,13 @@ class TwitchContent extends Component {
                                 </div>
                                 <div className="row tab-content">
                                     <div className="letest-news tab-pane fade in active" role="tabpanel" id="all">
-                                        {posts && <>
-                                            <div className="col-md-6 col-sm-6">
-                                                <div className="lt-single-post">
-                                                    <div className="single-lt-thumb">
-                                                        <img src={getFile + posts[0].headAttachment.hashId}
-                                                             alt="post thumbnail"/>
-                                                        <div className="lt-thumb-desc">
-                                                            <Link className="ln-post-cat" to={'/blog/' + posts[0].id}
-                                                                  href="#">{posts[0].category.name}</Link>
-                                                            <div className="meta-autor">
-                                                                <div className="meta-tag-area">
-                                                                    <span><WiTime9></WiTime9>{posts[0].createAt}</span>
-                                                                    <span><BsFillHeartFill></BsFillHeartFill>{posts[0].likesCount == null ? 0 : posts[0].likesCount.toString()}</span>
-                                                                    <span><FaComment></FaComment>{posts[0].comments.length}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <Link className="lt-snlg-title" href="#"
-                                                          to={'/blog/' + posts[0].id}>
-                                                        {posts[0].title}
-                                                    </Link>
-                                                    <p className="df-text">{posts[0].title.slice(0, 100)}</p>
-                                                </div>
-                                            </div>
-                                        </>}
+                                        {posts ? <HeadItem post={posts[0]}/>:<div id="preloader"/>}
                                         <div className="col-md-6 col-sm-6">
                                             {getMiniCards}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div className="top-bar-slider ls-slider owl-carousel">
                                 <Slider {...settings}>
@@ -145,14 +129,13 @@ class TwitchContent extends Component {
                                     <p>Yangilikalarimizni doimiy kuzatib borish uchun emailingizni qoldiring</p>
                                     <div className="widget_wysija_cont">
                                         <form
-                                            action="http://bytecode.us11.list-manage.com/subscribe/post?u=50a4b0170dab7d64fb3dc64c6&amp;id=00f92be9f0"
-                                            method="post" id="mc-embedded-subscribe-form"
+                                           id="mc-embedded-subscribe-form"
                                             name="mc-embedded-subscribe-form"
                                             className="validate" target="_blank" noValidate="">
                                             <input placeholder="Your email" name="EMAIL" id="mce-EMAIL"
                                                    type="email"/>
                                             <button name="subscribe" id="mc-embedded-subscribe">
-                                                <FaEnvelope></FaEnvelope>
+                                                <FaEnvelope/>
                                             </button>
                                         </form>
                                     </div>
@@ -165,6 +148,68 @@ class TwitchContent extends Component {
         );
     }
 };
+
+const HeadItem = ({post})=> {
+    let [likes, setLikes] = useState(0);
+    const [toogle, setToogle] = useState(false);
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        setToogle(!toogle);
+        getLikes();
+    };
+    useEffect(() => (
+        post&&(post.likesCount === undefined || post.likesCount === undefined ? setLikes(0) : setLikes(post.likesCount))
+    ), [post]);
+
+    const getLikes = () => {
+        !toogle ? postsApi.setLikes(post.id)
+                .then(
+                    res => {
+                        // console.log(res);
+                        setLikes(++likes)
+                    }
+                    ,
+                    err => console.log(err))
+            : postsApi.setDisLikes(post.id)
+                .then(res => {
+                    // console.log(res);
+                    setLikes(--likes)
+                }, err => console.log(err))
+    };
+
+    return(
+        <div className="col-md-6 col-sm-6">
+            <div className="lt-single-post">
+                <div className="single-lt-thumb">
+                    <img src={getFile + post.headAttachment.hashId}
+                         alt="post thumbnail"/>
+                    <div className="lt-thumb-desc">
+                        <Link className="ln-post-cat" to={'/blog/' + post.id}
+                              href="#">{post.category.name}</Link>
+                        <div className="meta-autor">
+                            <div className="meta-tag-area">
+                                <span><WiTime9></WiTime9>{post.createAt}</span>
+
+                                {/*<span><BsFillHeartFill></BsFillHeartFill>{posts[0].likesCount == null ? 0 : posts[0].likesCount.toString()}</span>*/}
+
+                                <span onClick={e => (handleChange(e))}>
+                        {toogle ? <BsFillHeartFill/> : <BsHeart/>}
+                                    {likes}</span>
+                                <span><FaComment></FaComment>{post.comments.length}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Link className="lt-snlg-title" href="#"
+                      to={'/blog/' + post.id}>
+                    {post.title}
+                </Link>
+                <p className="df-text">{post.title.slice(0, 100)}</p>
+            </div>
+        </div>
+    )
+}
 
 const mstp = (state) => (state);
 

@@ -4,8 +4,6 @@ export default function (state={}, action) {
             return {...state, file: action.payload}
         case "CREATE_COMMENT":
             return {...state, file: action.payload}
-        // case "GET_COMMENTS":
-            // return {...state, file: action.payload}
         default:
             return state;
     }

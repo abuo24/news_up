@@ -9,8 +9,8 @@ export function getCategories() {
         payload: req
     }
 }
-export function getNewsByCategoryId(categoryid) {
-    const req = axiosInstance.get("/admin/"+categoryid+"/news")
+export function getNewsByCategoryId(categoryid, page=0) {
+    const req = axiosInstance.get("/admin/"+categoryid+"/news?page="+page)
         .then(res => res.data);
 
     return {

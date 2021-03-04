@@ -6,12 +6,7 @@ export default function (state={}, action) {
             return {...state, posts: action.payload}
         case "GET_MOST_POSTS":
             return {...state, popular_posts: action.payload}
-        case "POST_ADD":
-            return {...state, edit: action.payload}
-        case "EDIT_POST":
-            return {...state, data: action.payload};
-        case "DELETE_POST":
-            return {...state, data: action.payload};
+
         default:
             return state;
     }

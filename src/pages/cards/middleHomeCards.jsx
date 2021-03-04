@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import life1 from "../../img/post-img/single-list-post1.jpg";
-import {Link} from "react-router-dom";
-import {BsFillHeartFill, FaComment, WiTime9} from "react-icons/all";
 import HomeCard from "./homeCard";
-import Slider from "react-slick";
 import {bindActionCreators} from "redux";
 import {getNewsByCategoryId} from "../../redux/actions/categoryApi";
 import {connect} from "react-redux";
 import {getFile} from "../../server/host";
 
 class MiddleHomeCards extends Component {
+
     componentDidMount() {
         this.props.getNewsByCategoryId(this.props.category.id).then(
             res=>{
@@ -22,7 +19,6 @@ class MiddleHomeCards extends Component {
     state = {};
 
     render() {
-
         const getBlogs = this.state.res&&this.state.res.payload&&this.state.res.payload.data.news.map((item, key) => (
             <HomeCard key={key} to={item.id} img={getFile+item.headAttachment.hashId} title={item.title} date={item.createAt.slice(0,11)} views={item.viewsCount} like={item.likesCount}
                       comment={item.comments} content={item.content}/>

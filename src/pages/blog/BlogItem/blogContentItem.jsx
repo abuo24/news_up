@@ -5,16 +5,42 @@ import {connect} from "react-redux";
 import {getFile} from "../../../server/host";
 import {NavLink} from "react-router-dom";
 import {postsApi} from "../../../redux/service/postsApi";
+import {toast, ToastContainer} from "react-toastify";
 
 class BlogContentItem extends Component {
 
-  componentWillUnmount() {
-    this.props.post && postsApi.setLikesAndViews(this.props.post.id).then(
-        res => console.log(res), err => console.log(err)
-    )
-  }
-  render() {
+    componentWillUnmount() {
+        this.props.post && postsApi.setLikesAndViews(this.props.post.id).then(
+            res => console.log(res), err => console.log(err)
+        )
+    }
+
+    state = {
+        author: "",
+        authorMail: "",
+        comments_id: "",
+        message: ""
+    }
+
+    note = () => toast.success("Saqlandi")
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        postsApi.createComment(this.props.post && this.props.post.id, this.state).then(
+            res => {
+                this.setState(null);
+                Array.from(document.querySelectorAll(".for_input")).forEach(
+                    input => (input.value = "")
+                );
+                this.note()
+            }).catch(err => console.log(err))
+    }
+
+    render() {
         const {post, posts} = this.props;
+
+        const obj = null;
+
         return (
             <div className="col-md-8 col-sm-8">
                 <div className="blog-post-details">
@@ -49,7 +75,9 @@ class BlogContentItem extends Component {
 
                 <div className="comments">
                     <div className="comments-count">
-                        <h4><span>{post && post.comments!==undefined && post.comments.length !== 0 ?post.comments.length : "0" }</span>Izohlar</h4>
+                        <h4>
+                            <span>{post && post.comments !== undefined && post.comments.length !== 0 ? post.comments.length : "0"}</span>Izohlar
+                        </h4>
                     </div>
                     <ul>{post && post.comments && post.comments.map((item) => (
                         <li key={item.id}>
@@ -64,8 +92,22 @@ class BlogContentItem extends Component {
                                         </h4>
                                         <p className="comment-content">
                                             {item.message}
-                                        </p><a href="#"
-                                               className="comment-reply-link"><AiOutlineArrowRight></AiOutlineArrowRight></a>
+                                        </p>
+                                        <div onClick={
+                                            e => {
+                                                e.preventDefault()
+                                                this.setState({...this.state, comments_id: item.id});
+                                                this.obj = item
+                                            }}
+                                             onDoubleClick={
+                                                 e => {
+                                                     e.preventDefault();
+                                                     this.setState({...this.state, comments_id: ""})
+                                                     this.obj = null
+                                                 }
+                                             }
+                                             className="comment-reply-link"><AiOutlineArrowRight></AiOutlineArrowRight>
+                                        </div>
                                     </div>
                                 </div>
                             </article>
@@ -83,8 +125,22 @@ class BlogContentItem extends Component {
                                                 </h4>
                                                 <p className="comment-content">
                                                     {item.comments.message}
-                                                </p><a href="#"
-                                                       className="comment-reply-link"><AiOutlineArrowRight></AiOutlineArrowRight></a>
+                                                </p>
+                                                <div onClick={
+                                                    e => {
+                                                        e.preventDefault()
+                                                        this.setState({...this.state, comments_id: item.comments.id});
+                                                        this.obj = item.comments
+                                                    }}
+                                                     onDoubleClick={
+                                                         e => {
+                                                             e.preventDefault();
+                                                             this.setState({...this.state, comments_id: ""})
+                                                             this.obj = null
+                                                         }
+                                                     }
+                                                     className="comment-reply-link">
+                                                    <AiOutlineArrowRight></AiOutlineArrowRight></div>
                                             </div>
                                         </div>
                                     </article>
@@ -97,24 +153,51 @@ class BlogContentItem extends Component {
                 <div className="comment-responsd">
                     <h4>Izoh yoki Izohlarga Javob qoldiring:)</h4>
                     <div className="contact-form">
+                        {this.obj && <ul className="children">
+                            <li>
+                                <article>
+                                    <div className="comment-status-text">
+                                        <div className="comment-img">
+                                            {this.obj && this.obj.author.slice(0, 1).toUpperCase()}
+                                        </div>
+                                        <div className="comment-author-metadata">
+                                            <h4 className="author">{this.obj && this.obj.author} <span
+                                                className="date">{this.obj && this.obj.createAt.slice(0, 16)}</span>
+                                            </h4>
+                                            <p className="comment-content">
+                                                {this.obj && this.obj.message}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                        </ul>
+                        }
                         <div className="cf-msg"></div>
-                        <form action="http://themeinnovation.com/demo2/html/newsupdate-preview/newsupdate/mail.php"
+                        <form onSubmit={this.onSubmit}
                               method="post" id="cf">
                             <div className="row">
                                 <div className="col-md-12 col-sm-12">
                                     <label htmlFor="name">Ism</label>
-                                    <input type="text" id="name" name="name"/>
+                                    <input className="for_input"
+                                           onChange={e => (this.setState({...this.state, author: e.target.value}))}
+                                           type="text" id="name" name="name" required/>
                                 </div>
                                 <div className="col-md-12 col-sm-12">
                                     <label htmlFor="email">EMail</label>
-                                    <input type="text" id="email" name="email"/>
+                                    <input className="for_input"
+                                           onChange={e => (this.setState({...this.state, authorMail: e.target.value}))}
+                                           type="text" id="email" name="email" required/>
                                 </div>
                                 <div className="col-md-12 col-sm-12">
                                     <label htmlFor="msg">Izoh</label>
-                                    <textarea className="contact-textarea" id="msg" name="msg"/>
+                                    <textarea onChange={e => (this.setState({...this.state, message: e.target.value}))}
+                                              className="contact-textarea for_input" id="msg" name="msg" required/>
                                 </div>
                                 <div className="col-md-12 col-sm-12">
-                                    <button className="cont-submit" id="submit" name="submit">Yuborish</button>
+                                    <button className="cont-submit" id="submit" name="submit" type="submit">Yuborish
+                                    </button>
+                                    <ToastContainer autoClose={2000}/>
                                 </div>
                             </div>
                         </form>

@@ -440,6 +440,27 @@ textarea {
     height: 650px!important;
 }
 
+div#preloader {
+    background: #fff url('./img/loader.gif') no-repeat scroll center center;
+    /*height: 100%;*/
+    /*left: 0;*/
+    /*overflow: visible;*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*width: 100%;*/
+    /*z-index: 9999;*/
+}
+div#preloader1 {
+    background: #fff url('https://thomas.vanhoutte.be/miniblog/wp-content/uploads/triangle_square_animation.gif') no-repeat scroll center center;
+    height: 100%;
+    left: 0;
+    overflow: visible;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
 .slider-text {
     position: absolute;
     /*left: 34%;*/

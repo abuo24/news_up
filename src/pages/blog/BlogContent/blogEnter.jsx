@@ -7,10 +7,8 @@ import {getFile} from "../../../server/host";
 
 const BlogEnter = (props) => {
 
-
     const getBlogs = props.post_reducer&&props.post_reducer.posts&&props.post_reducer.posts.data&&props.post_reducer.posts.data.map((item, key)=>(
-        // <p> d</p>
-        <BlogEnterItem category={item.category} img={getFile+item.headAttachment.hashId} comment={item.comment} date={item.createAt} title={item.title} to={"/blog/"+item.id} key={key}/>
+        <BlogEnterItem category={item.category} img={getFile+item.headAttachment.hashId} comment={item.comments} date={item.createAt} title={item.title} to={"/blog/"+item.id} key={key}/>
         ))
 
     return (
@@ -38,9 +36,9 @@ const BlogEnterItem = ({img, category, date, comment, to, title}) => {
                 <img src={img} alt="entertainment-img"/>
                 <div className="trd-post-info">
                     <div className="trd-desc-crumbs crmbs-one">
-                        <span className="trd-cat">{category.name}<AiTwotoneRightCircle></AiTwotoneRightCircle></span>
-                        <span><BiCalendarAlt></BiCalendarAlt>{date}</span>
-                        <span><FaComment></FaComment>{comment==null?0:comment.length}</span>
+                        <span className="trd-cat">{category.name}<AiTwotoneRightCircle/></span>
+                        <span><BiCalendarAlt/>{date}</span>
+                        <span><FaComment/>{comment===undefined?0:comment.length}</span>
                     </div>
                     <NavLink to={to} className="trd-post-title">
                         {title}

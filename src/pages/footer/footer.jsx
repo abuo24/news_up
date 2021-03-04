@@ -1,11 +1,23 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import st from './footer.module.css'
 import {Link, NavLink} from 'react-router-dom';
-import {AiOutlineHeart, BiTime, GrTwitter, ImEye, VscChevronRight, WiTime9} from "react-icons/all";
+import {
+    AiOutlineHeart,
+    BiTime,
+    BsFillHeartFill,
+    BsHeart, BsHeartFill,
+    GrTwitter,
+    ImEye,
+    VscChevronRight,
+    WiTime9
+} from "react-icons/all";
 import {connect} from "react-redux";
+import {postsApi} from "../../redux/service/postsApi";
 
 
 const Footer = (props) => {
+
+
     return (
         <footer>
             <div className={"footer-top"}>
@@ -30,17 +42,9 @@ const Footer = (props) => {
                                 <div className={"widget-recent-post"}>
                                     <h4 className={"ft-widget-title"}>Oxirgi Postlar</h4>
                                     {props.post_reducer && props.post_reducer.posts && props.post_reducer.posts.data && props.post_reducer.posts.data.slice(0, 2).map((item, key) => (
-                                        <div key={item.id}>
-                                            <div className={"widget-rcp-item"}>
-                                                <NavLink to={"/blog/" + item.id}>{item.title}</NavLink>
-                                                <div className={"cmn-tag-area"}>
-                                                    <span><WiTime9></WiTime9>{item.createAt.slice(0, 11)}</span>
-                                                    <span><ImEye></ImEye>{item.viewsCount == null ? 0 : item.viewsCount}</span>
-                                                    <span><AiOutlineHeart></AiOutlineHeart>{item.likesCount == null ? 0 : item.likesCount}</span>
-                                                </div>
-                                            </div>
-                                            <span className={"wd-line"}></span>
-                                        </div>))
+                                        <Item key={item.id} id={item.id} title={item.title} likesCount={item.likesCount}
+                                              viewsCount={item.viewsCount} createAt={item.createAt}/>
+                                    ))
                                     }
                                 </div>
                             </div>
@@ -51,12 +55,14 @@ const Footer = (props) => {
                                     <ul>
                                         {props.category_reducer && props.category_reducer.categories && props.category_reducer.categories.slice(0, 5).map((item, key) => (
                                             <li key={item.id}><NavLink
-                                                to={{pathname: "/news/"+item.name.toLowerCase(),
-                                                state: {
-                                                    item
-                                                }}}><VscChevronRight></VscChevronRight>{item.name}</NavLink>
+                                                to={{
+                                                    pathname: "/news/" + item.name.toLowerCase(),
+                                                    state: {
+                                                        item
+                                                    }
+                                                }}><VscChevronRight></VscChevronRight>{item.name}</NavLink>
                                             </li>))}
-                                        </ul>
+                                    </ul>
                                 </div>
                             </div>
                             <div className={"col-md-3 col-sm-3 col-xs-12"}>
@@ -103,7 +109,53 @@ const Footer = (props) => {
                 </div>
             </div>
         </footer>
-);
+    );
+}
+
+
+const Item = ({id, title, viewsCount, createAt, likesCount}) => {
+
+
+    let [likes, setLikes] = useState(0);
+    const [toogle, setToogle] = useState(false);
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        setToogle(!toogle);
+        getLikes();
+    }
+    useEffect(() => (
+        likesCount === null ? setLikes(0) : setLikes(likesCount)
+    ), [])
+
+    const getLikes = () => {
+        !toogle ? postsApi.setLikes(id)
+                .then(
+                    res => {
+                        console.log(res);
+                        setLikes(++likes)
+                    }
+                    ,
+                    err => console.log(err))
+            : postsApi.setDisLikes(id)
+                .then(res => {
+                    console.log(res);
+                    setLikes(--likes)
+                }, err => console.log(err))
+    }
+
+    return (<div key={id}>
+        <div className={"widget-rcp-item"}>
+            <NavLink to={"/blog/" + id}>{title}</NavLink>
+            <div className={"cmn-tag-area"}>
+                <span><WiTime9></WiTime9>{createAt.slice(0, 11)}</span>
+                <span><ImEye></ImEye>{viewsCount == null ? 0 : viewsCount}</span>
+                <span onClick={e => (handleChange(e))}>
+                        {!toogle ? <AiOutlineHeart/> : <BsHeartFill/>}{likes}</span></div>
+        </div>
+        <span className={"wd-line"}></span>
+    </div>)
+
 }
 
 const mstp = (state) => (state);

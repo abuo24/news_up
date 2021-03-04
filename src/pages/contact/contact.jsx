@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {FaRegClock, HiMail, HiPhone, ImLocation} from "react-icons/all";
 
 import GoogleMapReact from 'google-map-react';
+import {postsApi} from "../../redux/service/postsApi";
+import {toast, ToastContainer} from "react-toastify";
 
 const AnyReactComponent = ({text}) => <div>{text}</div>;
 
@@ -26,10 +28,9 @@ const Contact = () => {
                         <div className="map">
                             <AnyReactComponent
                                 lat={41.339328}
-                                lng={ 69.285872}
-                                text="My Marker"
+                                lng={69.285872}
+                                text="Karta Yuklanyabdi"
                             />
-
                         </div>
                     </div>
                 </GoogleMapReact>
@@ -53,7 +54,7 @@ const Contact = () => {
                                         <article>
                                             <HiPhone></HiPhone>
                                             <h5>phone</h5>
-                                            <p>+998 93 209 99 24<br/>+7 239 585-58-61</p>
+                                            <p>+998 93 209 99 24<br/>+998 93 208 99 24</p>
                                         </article>
                                     </li>
                                     <li>
@@ -76,28 +77,7 @@ const Contact = () => {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                            <div className="contact-write">
-                                <h4>Contact Info</h4>
-                                <div className="cw-form">
-                                    <form action="#">
-                                        <div className="input">
-                                            <label htmlFor="fname">First Name</label>
-                                            <input type="text" id="fname" name="fname"/>
-                                        </div>
-                                        <div className="input last-name">
-                                            <label htmlFor="sname">Second Name</label>
-                                            <input type="text" id="sname" name="sname"/>
-                                        </div>
-                                        <div className="text-area">
-                                            <label htmlFor="msg">Message</label>
-                                            <textarea name="msg" id="msg"></textarea>
-                                        </div>
-                                        <div className="send-btn">
-                                            <input type="submit" value="Send Message" name="send"/>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                          <SendMessage/>
                         </div>
                     </div>
                 </div>
@@ -105,4 +85,62 @@ const Contact = () => {
         </div>
     );
 };
+
+class SendMessage extends Component {
+
+    componentWillUnmount() {
+        this.props.post && postsApi.setLikesAndViews(this.props.post.id).then(
+            res => console.log(res), err => console.log(err)
+        )
+    }
+
+    state = {
+        firstName: "",
+        lastName: "",
+        message: ""
+    }
+
+    note = () => toast.success("Saqlandi")
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        postsApi.createMessage( this.state&& this.state).then(
+            res => {
+                this.setState(null);
+                Array.from(document.querySelectorAll(".for_input_message")).forEach(
+                    input => (input.value = "")
+                );
+                this.note()
+            }).catch(err => console.log(err))
+    }
+
+    render() {
+        return (
+            <div className="contact-write">
+                <h4>Contact Info</h4>
+                <div className="cw-form">
+                    <form onSubmit={this.onSubmit} >
+                        <div className="input">
+                            <label htmlFor="fname">First Name</label>
+                            <input required onChange={e => (this.setState({...this.state, firstName: e.target.value}))} className="for_input_message"  type="text" id="fname" name="fname"/>
+                        </div>
+                        <div className="input last-name">
+                            <label htmlFor="sname">Second Name</label>
+                            <input required onChange={e => (this.setState({...this.state, lastName: e.target.value}))}  className="for_input_message"  type="text" id="sname" name="sname"/>
+                        </div>
+                        <div className="text-area">
+                            <label htmlFor="msg">Message</label>
+                            <textarea required onChange={e => (this.setState({...this.state, message: e.target.value}))}  className="for_input_message" name="msg" id="msg"/>
+                        </div>
+                        <div className="send-btn">
+                            <input type="submit" value="Xabarni Yuborish" name="send"/>
+                            <ToastContainer/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )
+    }
+}
+
 export default Contact;
