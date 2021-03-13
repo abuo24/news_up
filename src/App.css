@@ -439,7 +439,7 @@ textarea {
 .head-img{
     height: 650px!important;
 }
-
+ul
 div#preloader {
     background: #fff url('./img/loader.gif') no-repeat scroll center center;
     /*height: 100%;*/
@@ -3273,9 +3273,14 @@ ul.children::before {
     position: absolute;
     left: 0;
     top: 56px;
-    width: 60px;
-    height: 1px;
+    /*width: 60px;*/
+    width: 0!important;
+    height: 0!important;
+    /*height: 1px;*/
     background: #9c8156;
+}
+li::marker{
+
 }
 
 .comment-responsd {
@@ -3338,7 +3343,9 @@ form#cf .cont-submit {
 form#cf .cont-submit:hover, .blg-slider-text a.blg-post-cat:hover{
     background: #cf5013;
 }
-
+ul,li{
+    list-style: none!important;
+}
 /*------------------------------
  7. BlogPost details
  -------------------------------*/

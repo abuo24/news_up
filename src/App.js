@@ -16,7 +16,7 @@ class App extends Component {
 
     state = {
         isRequest: true,
-        posts: {},
+        posts: {}
     };
 
     componentDidMount() {

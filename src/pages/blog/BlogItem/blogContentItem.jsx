@@ -47,7 +47,22 @@ class BlogContentItem extends Component {
                     <p className="blog-text">
                         {post && post.content}
                     </p>
+
+                    <div className="bp-tag-area">
+                        <h4>Teglar</h4>
+                        <div className="row">
+                            <div className="col-xs-8">
+                                <div className="bp-tags">
+                                    {
+                                        post&&post.tags.map((item)=>(
+                                            <a key={item.id}>{item.tag}</a>
+                                        ))
+                                    }</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div className="related-product">
                     <h3 className="related-title">Oxirgi Yangiliklar</h3>
                     <div className="row">

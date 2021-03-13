@@ -10,6 +10,7 @@ export function allPosts() {
         payload: req
     }
 }
+
 export function getPost(id) {
     const req = axiosInstance.get("/admin/news/"+id)
         .then(res => res.data);
@@ -18,8 +19,9 @@ export function getPost(id) {
         payload: req
     }
 }
+
 export function getPopularPosts() {
-    const req = axiosInstance.get("/admin/news/most")
+    const req = axiosInstance.get("/admin/news/likes")
         .then(res => res.data);
     return {
         type:"GET_MOST_POSTS",
