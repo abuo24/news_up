@@ -69,95 +69,26 @@ class HeaderBottom extends Component {
                                                 this.onChange()
                                             }}>{!this.state.toogle ? <FaBars></FaBars> : <BiMinus></BiMinus>}</li>
                                             {this.state.toogle && <div>
-                                                <li><NavLink to={"news"}>Ijtimoiy</NavLink>
+                                                <li><NavLink activeStyle={{
+                                                    color: "#f26522"
+                                                }} to={"/news"}>Umumiy</NavLink>
                                                     <ul className="drop-menu">
-                                                        <li>
-                                                            <NavLink to={"/news/bussines"}>
-                                                                Biznes
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/society"}>
-                                                                Jamiyat
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/world"}>
-                                                                Jahon
-                                                            </NavLink>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li><NavLink to={"news"}>Foydali</NavLink>
-                                                    <ul className="drop-menu">
-                                                        <li>
-                                                            <NavLink to={"/news/sport"}>
-                                                                Sport
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/technolody"}>
-                                                                Texnologiya
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/travel"}>
-                                                                Sayohat
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/health"}>
-                                                                Salomatlik
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/fashion"}>
-                                                                Moda
-                                                            </NavLink>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li><NavLink to={"news"}>Foydali</NavLink>
-                                                    <ul className="drop-menu">
-                                                        <li>
-                                                            <NavLink to={"/news/travel"}>
-                                                                Sayohat
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/health"}>
-                                                                Salomatlik
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/fashion"}>
-                                                                Moda
-                                                            </NavLink>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li><NavLink to={"news"}>TexnoSport</NavLink>
-                                                    <ul className="drop-menu">
-                                                        <li>
-                                                            <NavLink to={"/news/travel"}>
-                                                                Avto
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/sport"}>
-                                                                Sport
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/sport"}>
-                                                                Internet
-                                                            </NavLink>
-                                                        </li>
-                                                        <li>
-                                                            <NavLink to={"/news/technolody"}>
-                                                                Texnologiya
-                                                            </NavLink>
-                                                        </li>
+                                                        {this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map(
+                                                            (item) =>
+                                                                (
+                                                                    <li key={item.id}>
+                                                                        <NavLink
+                                                                            to={{
+                                                                                pathname: "/news/" + item.name.toLowerCase(),
+                                                                                state: {
+                                                                                    item
+                                                                                }
+                                                                            }}>
+                                                                            {item.name}
+                                                                        </NavLink>
+                                                                    </li>
+                                                                ))
+                                                        }
                                                     </ul>
                                                 </li>
                                                 <li><NavLink to={"/blog"}>Blog</NavLink></li>

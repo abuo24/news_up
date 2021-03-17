@@ -10,10 +10,10 @@ const BlogSlider = (props) => {
             <div className="blog-post-slider">
                 <div className="container">
                     <div className="row">
-                        <div className="blg-slider-text">
-                            <NavLink to={"/"} className="blg-post-cat">Bosh Saxifa</NavLink>
+                        <div className="blg-slider-text text-center">
+                            <NavLink to={"/"} className="blg-post-cat  text-center">Bosh Saxifa</NavLink>
                             <div className="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-                                <a href="#" className="blog-post-title">{
+                                <a href="#" className="blog-post-title  text-center">{
                                     props.post_reducer.post&&props.post_reducer.post.data&&props.post_reducer.post.data.title
                                 }</a>
                             </div>

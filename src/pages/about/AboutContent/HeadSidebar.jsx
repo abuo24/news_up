@@ -64,7 +64,8 @@ const HeadSidebar = (props) => {
                                 </div>
                                 <div className="col-7">
                                     <div className="wh3-litem-info">
-                                        <NavLink to={"/blog/" + item.id}>{item.content}</NavLink>
+                                        <NavLink to={"/blog/" + item.id}>
+                                            <p  dangerouslySetInnerHTML={{ __html: item.title }}></p></NavLink>
                                         <div className="wh3-item-fback">
                                             <span><WiTime9/>{item.createAt}</span>
                                             <span><FaComment/>{item.comments.length}</span>
@@ -85,4 +86,3 @@ const HeadSidebar = (props) => {
 const mstp = (state) => (state);
 
 export default connect(mstp, null)(HeadSidebar);
-// export default HeadSidebar;

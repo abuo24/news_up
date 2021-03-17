@@ -23,7 +23,7 @@ class TwitchContent extends Component {
 
     render() {
 
-        const popular = this.props.post_reducer&&this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data;
+        const popular = this.props.post_reducer && this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data;
 
         let list = [];
         popular && popular.map(item => {
@@ -52,7 +52,7 @@ class TwitchContent extends Component {
             infinite: true,
             speed: 500,
             slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToScroll: 1,
         };
 
         return (
@@ -72,7 +72,7 @@ class TwitchContent extends Component {
                                 </div>
                                 <div className="row tab-content">
                                     <div className="letest-news tab-pane fade in active" role="tabpanel" id="all">
-                                        {posts ? <HeadItem post={posts[0]}/>:<div id="preloader"/>}
+                                        {posts ? <HeadItem post={posts[0]}/> : <div id="preloader"/>}
                                         <div className="col-md-6 col-sm-6">
                                             {getMiniCards}
                                         </div>
@@ -124,22 +124,22 @@ class TwitchContent extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="widget widget-subscribe">
-                                    <h4>Bizni kuzating</h4>
-                                    <p>Yangilikalarimizni doimiy kuzatib borish uchun emailingizni qoldiring</p>
-                                    <div className="widget_wysija_cont">
-                                        <form
-                                           id="mc-embedded-subscribe-form"
-                                            name="mc-embedded-subscribe-form"
-                                            className="validate" target="_blank" noValidate="">
-                                            <input placeholder="Your email" name="EMAIL" id="mce-EMAIL"
-                                                   type="email"/>
-                                            <button name="subscribe" id="mc-embedded-subscribe">
-                                                <FaEnvelope/>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
+                                {/*<div className="widget widget-subscribe">*/}
+                                {/*    <h4>Bizni kuzating</h4>*/}
+                                {/*    <p>Yangilikalarimizni doimiy kuzatib borish uchun emailingizni qoldiring</p>*/}
+                                {/*    <div className="widget_wysija_cont">*/}
+                                {/*        <form*/}
+                                {/*            id="mc-embedded-subscribe-form"*/}
+                                {/*            name="mc-embedded-subscribe-form"*/}
+                                {/*            className="validate" target="_blank" noValidate="">*/}
+                                {/*            <input placeholder="Your email" name="EMAIL" id="mce-EMAIL"*/}
+                                {/*                   type="email"/>*/}
+                                {/*            <button name="subscribe" id="mc-embedded-subscribe">*/}
+                                {/*                <FaEnvelope/>*/}
+                                {/*            </button>*/}
+                                {/*        </form>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ class TwitchContent extends Component {
     }
 };
 
-const HeadItem = ({post})=> {
+const HeadItem = ({post}) => {
     let [likes, setLikes] = useState(0);
     const [toogle, setToogle] = useState(false);
 
@@ -159,7 +159,7 @@ const HeadItem = ({post})=> {
         getLikes();
     };
     useEffect(() => (
-        post&&(post.likesCount === undefined || post.likesCount === undefined ? setLikes(0) : setLikes(post.likesCount))
+        post && (post.likesCount === undefined || post.likesCount === undefined ? setLikes(0) : setLikes(post.likesCount))
     ), [post]);
 
     const getLikes = () => {
@@ -178,34 +178,34 @@ const HeadItem = ({post})=> {
                 }, err => console.log(err))
     };
 
-    return(
+    return (
         <div className="col-md-6 col-sm-6">
             <div className="lt-single-post">
                 <div className="single-lt-thumb">
-                    <img src={getFile + post.headAttachment.hashId}
-                         alt="post thumbnail"/>
-                    <div className="lt-thumb-desc">
+                    {post && post.headAttachment && post.headAttachment.hashId != null ?
+                        <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
+                    {post != null ? <div className="lt-thumb-desc">
                         <Link className="ln-post-cat" to={'/blog/' + post.id}
                               href="#">{post.category.name}</Link>
                         <div className="meta-autor">
                             <div className="meta-tag-area">
                                 <span><WiTime9></WiTime9>{post.createAt}</span>
-
-                                {/*<span><BsFillHeartFill></BsFillHeartFill>{posts[0].likesCount == null ? 0 : posts[0].likesCount.toString()}</span>*/}
-
                                 <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                     {likes}</span>
                                 <span><FaComment></FaComment>{post.comments.length}</span>
                             </div>
                         </div>
-                    </div>
+                    </div> : ""
+                    }
                 </div>
-                <Link className="lt-snlg-title" href="#"
-                      to={'/blog/' + post.id}>
-                    {post.title}
-                </Link>
-                <p className="df-text">{post.title.slice(0, 100)}</p>
+                {post && <>
+                    <Link className={"lt-snlg-title "} href="#"
+                          to={'/blog/' + post.id}>
+                        {post.title}
+                    </Link>
+                    <p className="df-text"  dangerouslySetInnerHTML={{ __html: post&&post.content.slice(0,100) }}></p>
+                </>}
             </div>
         </div>
     )

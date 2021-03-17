@@ -13,7 +13,7 @@ class NewsItem extends Component {
             id: this.props.category.id,
             category: this.props.category,
             posts: null,
-            currentPage: 0
+            currentPage: 0,
         };
     }
 
@@ -75,6 +75,8 @@ class NewsItem extends Component {
         }
     }
 
+
+
     render() {
 
         console.log(this.state.posts);
@@ -119,7 +121,6 @@ class NewsItem extends Component {
                         </ul>
                     </nav> : ""
                 }
-
             </div>
         )
     }

@@ -44,8 +44,7 @@ class BlogContentItem extends Component {
         return (
             <div className="col-md-8 col-sm-8">
                 <div className="blog-post-details">
-                    <p className="blog-text">
-                        {post && post.content}
+                    <p className="blog-text"  dangerouslySetInnerHTML={{ __html: post && post.content }}>
                     </p>
 
                     <div className="bp-tag-area">

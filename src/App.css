@@ -70,7 +70,12 @@ div#preloader {
     width: 100%;
     z-index: 9999;
 }
-
+.setslider{
+    height: 140px!important;
+}
+.lt-snlg-title {
+    overflow: hidden;
+}
 header.navbar-fixed-top {
     animation-duration: 0.8s;
     animation-name: fadeInDown;

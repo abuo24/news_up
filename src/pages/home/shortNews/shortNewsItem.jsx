@@ -1,6 +1,10 @@
-const ShortNewsItem = ({title}) => {
+const ShortNewsItem = ({title, create}) => {
     return (<>
-            <p>{title}</p>
+            <p className={"row"}>
+                <div className={"col-8"}>{title}
+                </div>
+                <div className={"muted col-4"}>{create.slice(5,11)}</div>
+            </p>
             <span className="line"></span>
         </>
     )

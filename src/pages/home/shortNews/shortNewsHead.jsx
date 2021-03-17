@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getPostByCategoryId} from "../../../redux/actions/shortPostApi";
 import ShortNews from "./shortNews";
 import ShortNewsItem from "./shortNewsItem";
+import Slider from "react-slick"
 
 const ShortNewsHead = (props) => {
 
@@ -18,18 +19,29 @@ const ShortNewsHead = (props) => {
         )
     }, []);
 
+    const settings = {
+        dots: false,
+        autoplay: true,
+        infinite: true,
+        speed: 20,
+        vertical: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        arrows: false,
+    };
+
     return (
-        <>
-            <div className="col-md-3 col-sm-3 col-xs-12">
+            <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="short-news">
                     <h4 className="sn-title">
                         {props.category.name}</h4>
-                    { post && post.shortnews && post.shortnews.slice(0, 2).map((item, key) => (
-                        <ShortNewsItem key={item.id} title={item.title} />
+                    <Slider {...settings} className={"m-0 p-0 setslider"}>
+                    { post && post.shortnews.slice(0,10).map((item, key) => (
+                        <ShortNewsItem key={item.id} title={item.title} create={item.createAt} />
                     ))}
+                    </Slider>
                 </div>
             </div>
-        </>
     );
 }
 
