@@ -3,9 +3,7 @@ import st from './footer.module.css'
 import {Link, NavLink} from 'react-router-dom';
 import {
     AiOutlineHeart,
-    BiTime,
-    BsFillHeartFill,
-    BsHeart, BsHeartFill,
+    BsHeartFill,
     GrTwitter,
     ImEye,
     VscChevronRight,
@@ -17,6 +15,14 @@ import {postsApi} from "../../redux/service/postsApi";
 
 const Footer = (props) => {
 
+    const [lang, setLang] = useState(true)
+    const [langs, setLangs] = useState(props.langReducer.lang)
+
+    useEffect(() => {
+            setLang(props.langReducer.type == "uz" ? true : false)
+            setLangs(props.langReducer.lang)
+        }
+    )
 
     return (
         <footer>
@@ -33,16 +39,18 @@ const Footer = (props) => {
                         <div className={"footer-widget-area"}>
                             <div className={"col-md-3 col-sm-3 col-xs-12"}>
                                 <div className={"widget-about"}>
-                                    <h4 className={"ft-widget-title"}>Biz haqimizda</h4>
-                                    <p>Biz bilan o'zgacha yangiliklarni birinchilardan bo'lib kuzating </p>
-                                    <p>Bu yerda sizning reklamangiz bo'lishi mumkin edi:)</p>
+                                    <h4 className={"ft-widget-title"}>{langs.about}</h4>
+                                    <p>{langs.subtext}</p>
+                                    <p>{langs.rektext}</p>
                                 </div>
                             </div>
                             <div className={"col-md-3 col-sm-3 col-xs-12"}>
                                 <div className={"widget-recent-post"}>
-                                    <h4 className={"ft-widget-title"}>Oxirgi Postlar</h4>
+                                    <h4 className={"ft-widget-title"}>{langs.latestNews}</h4>
                                     {props.post_reducer && props.post_reducer.posts && props.post_reducer.posts.data && props.post_reducer.posts.data.slice(0, 2).map((item, key) => (
-                                        <Item key={item.id} id={item.id} title={item.title} likesCount={item.likesCount}
+                                        <Item key={item.id} id={item.id}
+                                              title={props.langReducer.type == "uz" ? item.titleUz : item.titleRu}
+                                              likesCount={item.likesCount}
                                               viewsCount={item.viewsCount} createAt={item.createAt}/>
                                     ))
                                     }
@@ -51,17 +59,16 @@ const Footer = (props) => {
                             <div className={"col-md-3 col-sm-3 col-xs-12"}>
                                 <div className={"widget-find-more"}>
 
-                                    <h4 className={"ft-widget-title"}>Ko'proq ko'rish</h4>
+                                    <h4 className={"ft-widget-title"}>{langs.reedMore}</h4>
                                     <ul>
                                         {props.category_reducer && props.category_reducer.categories && props.category_reducer.categories.slice(0, 5).map((item, key) => (
                                             <li key={item.id}><NavLink
                                                 to={{
-                                                    pathname: "/news/" + item.name.toLowerCase(),
-                                                    state: {
-                                                        item
-                                                    }
-                                                }}><VscChevronRight></VscChevronRight>{item.name}</NavLink>
-                                            </li>))}
+                                                    pathname: "/news/" + item.id
+                                                }}><VscChevronRight></VscChevronRight>{props.langReducer.type == "uz" ? item.nameUz : item.nameRu}
+                                            </NavLink>
+                                            </li>))
+                                        }
                                     </ul>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './css/animate.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './css/bootstrap.min.css'
 import './css/typography.css';
 import "react-slick";
@@ -15,7 +16,8 @@ import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
 import promiseMiddleware from "redux-promise";
 import rootReducer from "./redux/reducers";
-
+import $ from 'jquery';
+import Popper from 'popper.js';
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
 

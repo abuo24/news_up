@@ -10,7 +10,7 @@ class NewsItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.category.id,
+            id: this.props&&this.props.category&&this.props.category.id,
             category: this.props.category,
             posts: null,
             currentPage: 0,
@@ -24,21 +24,35 @@ class NewsItem extends Component {
             }).catch(
             err => console.log(err)
         )
+        this.setState({
+            ...this.state,
+            lang: this.props.langReducer.type=="uz"?true:false,
+            langs: this.props.langReducer.lang
+        })
     }
 
     componentDidUpdate() {
         if (this.state.id !== this.props.category.id) {
             this.setState({
+                ...this.state,
                 id: this.props.category.id,
                 category: this.props.category
             });
             this.props.getNewsByCategoryId(this.props.category.id, this.state.currentPage).then((result) => {
-                this.setState({posts: result.payload.data, totalPages: result.payload.data.totalPages}, () => {
+                this.setState({...this.state,posts: result.payload.data, totalPages: result.payload.data.totalPages}, () => {
                 })
             }).catch(
                 err => console.log(err)
             )
         }
+
+            if (this.state.lang !== (this.props.langReducer.type == "uz" ? true : false)) {
+                this.setState({
+                    ...this.state,
+                    lang: this.props.langReducer.type == "uz" ? true : false,
+                    langs: this.props.langReducer.lang
+                })
+            }
     }
 
     onHandleSubmit = (i) => {
@@ -79,24 +93,23 @@ class NewsItem extends Component {
 
     render() {
 
-        console.log(this.state.posts);
         const totalP = this.state.posts && this.state.posts.totalPages;
 
         let key = 0;
         const getMiddleHomeCards = this.state.posts && this.state.posts && this.state.posts.news.map((item) => (
-            <HomeCard key={key++} title={item.title} views={item.viewsCount} to={item.id} like={item.likesCount}
+            <HomeCard key={key++} title={this.state.lang?item.titleUz:item.titleRu} views={item.viewsCount} to={item.id} like={item.likesCount}
                       date={item.createAt.slice(0, 11)} img={getFile + item.headAttachment.hashId}
-                      comment={item.comments} content={item.content}/>
+                      comment={item.comments} content={this.state.lang?item.contentUz:item.contentRu}/>
         ));
 
         return (
             <div className="lifestyle-slider-item">
                 <div className="section-top-bar">
-                    <h4>{this.state.category && this.state.category.name}</h4>
+                    <h4>{this.state&&this.state.category && this.state.lang?this.state.category&&this.state.category.nameUz:this.state.category&&this.state.category.nameRu}</h4>
                 </div>
                 <div className="row">
                     {key !== 0 ? getMiddleHomeCards :
-                        <div className="text-center ml-5">Hali Malumotlar yuklanmagan:(
+                        <div className="text-center ml-5">{this.state.langs&&this.state.langs.oops}
                         </div>
                     }
                 </div>
@@ -106,7 +119,7 @@ class NewsItem extends Component {
                         <ul className="pagination">
                             <li className="page-item">
                                 <a className="page-link"
-                                   onClick={e => this.onHandleSubmit(this.state.currentPage - 1)}>Oldingi</a>
+                                   onClick={e => this.onHandleSubmit(this.state.currentPage - 1)}>{this.state.langs&&this.state.langs.prev.slice(0,4)+".."}</a>
                             </li>
 
                             {Array(totalP).fill(1).map((el, i) => this.state.currentPage === i ?
@@ -116,7 +129,7 @@ class NewsItem extends Component {
                             )}
 
                             <li className="page-item" onClick={e => this.onHandleSubmit(this.state.currentPage + 1)}>
-                                <a className="page-link">Keyingi</a>
+                                <a className="page-link">{this.state.langs&&this.state.langs.next.slice(0,4)+".."}</a>
                             </li>
                         </ul>
                     </nav> : ""

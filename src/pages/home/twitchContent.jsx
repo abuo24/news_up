@@ -21,6 +21,21 @@ import {postsApi} from "../../redux/service/postsApi";
 
 class TwitchContent extends Component {
 
+    state = {
+        lang: this.props.langReducer.type == "ru" ? false : true,
+        langs: this.props.langReducer.lang
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.lang !== (this.props.langReducer.type == "uz" ? true : false)) {
+            this.setState({
+                ...this.state,
+                lang: this.props.langReducer.type == "uz" ? true : false,
+                langs: this.props.langReducer.lang
+            })
+        }
+    }
+
     render() {
 
         const popular = this.props.post_reducer && this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data;
@@ -36,11 +51,14 @@ class TwitchContent extends Component {
         const posts = this.props.post_reducer.posts && this.props.post_reducer.posts.data;
 
         const getMiniCards = posts && posts.slice(0, 5).map((item, key) => (
-            <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId} title={item.title}
+            <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
+                      title={this.state.lang ? item.titleUz : item.titleRu}
+                      content={this.state.lang ? item.contentUz : item.contentRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
         const getMiniCardsPopular = list && list.slice(0, 5).map((item, key) => (
-            <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId} title={item.title}
+            <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
+                      title={this.state.lang ? item.titleUz : item.titleRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
         const getMiddleHomeCards = this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map((item, key) => (
@@ -55,6 +73,8 @@ class TwitchContent extends Component {
             slidesToScroll: 1,
         };
 
+        // const {type} = this.props.langReducer;
+
         return (
             <div className="twich-content-area">
                 <div className="container">
@@ -62,17 +82,20 @@ class TwitchContent extends Component {
                         <div className="col-md-8 col-sm-8">
                             <div className="letest-news-area">
                                 <div className="section-top-bar">
-                                    <h4 className={"text-muted"}>So'ngi yangiliklar</h4>
+                                    <h4 className={"text-muted"}>{this.state.langs&&this.state.langs.latestNews}</h4>
                                     <ul className={"text-muted"}>
                                         <li role="presentation" className="active">
                                             <a aria-controls="all" role="tab"
-                                               data-toggle="tab">Umumiy</a>
+                                               data-toggle="tab">{this.state.langs&&this.state.langs.all}</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="row tab-content">
                                     <div className="letest-news tab-pane fade in active" role="tabpanel" id="all">
-                                        {posts ? <HeadItem post={posts[0]}/> : <div id="preloader"/>}
+                                        {posts && <HeadItem post={posts[0]}
+                                                            content={this.state.lang ? posts[0].contentUz : posts[0].contentRu}
+                                                            title={this.state.lang ? posts[0].titleUz : posts[0].titleRu}
+                                                            name={this.state.lang ? posts[0].category.nameUz : posts[0].category.nameRu}/>}
                                         <div className="col-md-6 col-sm-6">
                                             {getMiniCards}
                                         </div>
@@ -92,17 +115,17 @@ class TwitchContent extends Component {
                                     <div className="widget-fb">
                                         <FiInstagram></FiInstagram>
                                         <h4>4,000</h4>
-                                        <h6>Fanatlar</h6>
+                                        <h6>{this.state.langs&&this.state.langs.fanat}</h6>
                                     </div>
                                     <div className="widget-twitter">
                                         <IoLogoTwitter></IoLogoTwitter>
                                         <h4>3,000</h4>
-                                        <h6>Kuzatuvchi</h6>
+                                        <h6>{this.state.langs&&this.state.langs.seens}</h6>
                                     </div>
                                     <div className="widget-g-plus">
                                         <GrYoutube></GrYoutube>
                                         <h4>2,000</h4>
-                                        <h6>Azolar</h6>
+                                        <h6>{this.state.langs&&this.state.langs.sub}</h6>
                                     </div>
                                 </div>
 
@@ -111,35 +134,19 @@ class TwitchContent extends Component {
                                     <div className="top-bar-slider owl-carousel">
                                         <div className="most-slider-item">
                                             <div className="section-top-bar">
-                                                <h4>Eng ko'p ko'rilgan</h4>
+                                                <h4>{this.state.langs&&this.state.langs.maxseen}</h4>
                                             </div>
                                             {getMiniCardsPopular}
                                         </div>
 
                                         <div className="most-slider-item">
                                             <div className="section-top-bar">
-                                                <h4>Haftalik Top</h4>
+                                                <h4>{this.state.langs&&this.state.langs.weektop}</h4>
                                             </div>
                                             {getMiniCardsPopular}
                                         </div>
                                     </div>
                                 </div>
-                                {/*<div className="widget widget-subscribe">*/}
-                                {/*    <h4>Bizni kuzating</h4>*/}
-                                {/*    <p>Yangilikalarimizni doimiy kuzatib borish uchun emailingizni qoldiring</p>*/}
-                                {/*    <div className="widget_wysija_cont">*/}
-                                {/*        <form*/}
-                                {/*            id="mc-embedded-subscribe-form"*/}
-                                {/*            name="mc-embedded-subscribe-form"*/}
-                                {/*            className="validate" target="_blank" noValidate="">*/}
-                                {/*            <input placeholder="Your email" name="EMAIL" id="mce-EMAIL"*/}
-                                {/*                   type="email"/>*/}
-                                {/*            <button name="subscribe" id="mc-embedded-subscribe">*/}
-                                {/*                <FaEnvelope/>*/}
-                                {/*            </button>*/}
-                                {/*        </form>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
                             </div>
                         </div>
                     </div>
@@ -149,7 +156,8 @@ class TwitchContent extends Component {
     }
 };
 
-const HeadItem = ({post}) => {
+const HeadItem = ({post, content, title, name}) => {
+
     let [likes, setLikes] = useState(0);
     const [toogle, setToogle] = useState(false);
 
@@ -184,10 +192,10 @@ const HeadItem = ({post}) => {
                 <div className="single-lt-thumb">
                     {post && post.headAttachment && post.headAttachment.hashId != null ?
                         <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
-                    {post != null ? <div className="lt-thumb-desc">
+                    <div className="lt-thumb-desc">
                         <Link className="ln-post-cat" to={'/blog/' + post.id}
-                              href="#">{post.category.name}</Link>
-                        <div className="meta-autor">
+                              href="#">{name}</Link>
+                        {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
                                 <span><WiTime9></WiTime9>{post.createAt}</span>
                                 <span onClick={e => (handleChange(e))}>
@@ -195,17 +203,16 @@ const HeadItem = ({post}) => {
                                     {likes}</span>
                                 <span><FaComment></FaComment>{post.comments.length}</span>
                             </div>
-                        </div>
-                    </div> : ""
-                    }
+                        </div> : ""}
+                    </div>
                 </div>
-                {post && <>
+                <>
                     <Link className={"lt-snlg-title "} href="#"
                           to={'/blog/' + post.id}>
-                        {post.title}
+                        {title}
                     </Link>
-                    <p className="df-text"  dangerouslySetInnerHTML={{ __html: post&&post.content.slice(0,100) }}></p>
-                </>}
+                    <p className="df-text" dangerouslySetInnerHTML={{__html: content.slice(0, 100)}}/>
+                </>
             </div>
         </div>
     )

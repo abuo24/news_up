@@ -10,6 +10,7 @@ const ShortNewsHead = (props) => {
 
 
     const [post, setPost] = useState(null);
+    const [lang, setLang] = useState(true);
 
     useEffect(() => {
         props.getPostByCategoryId(props.category.id).then(
@@ -17,7 +18,11 @@ const ShortNewsHead = (props) => {
         ).catch(
             err => console.log(err)
         )
+        setLang(props.langReducer.type == "uz" ? true : false)
     }, []);
+    useEffect(() => {
+        setLang(props.langReducer.type == "uz" ? true : false)
+    })
 
     const settings = {
         dots: false,
@@ -31,17 +36,17 @@ const ShortNewsHead = (props) => {
     };
 
     return (
-            <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="short-news">
-                    <h4 className="sn-title">
-                        {props.category.name}</h4>
-                    <Slider {...settings} className={"m-0 p-0 setslider"}>
-                    { post && post.shortnews.slice(0,10).map((item, key) => (
-                        <ShortNewsItem key={item.id} title={item.title} create={item.createAt} />
+        <div className="col-md-12 col-sm-12 col-xs-12">
+            <div className="short-news">
+                <h4 className="sn-title">
+                    {lang ? props.category.nameUz : props.category.nameRu}</h4>
+                <Slider {...settings} className={"m-0 p-0 setslider"}>
+                    {post && post.shortnews.slice(0, 10).map((item, key) => (
+                        <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu} create={item.createAt}/>
                     ))}
-                    </Slider>
-                </div>
+                </Slider>
             </div>
+        </div>
     );
 }
 

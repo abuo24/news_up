@@ -303,6 +303,19 @@ textarea {
     z-index: 8;
     transition: all 0.3s ease 0s;
 }
+.drop-menu {
+    position: absolute;
+    left: 0;
+    top: 59px;
+    width: 215px;
+    background: #222626;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    transform:translateY(12px);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 8;
+    transition: all 0.3s ease 0s;
+}
 
 .main-menu nav ul li:hover > ul.drop-menu {
     transform:translateY(0px);
@@ -320,7 +333,10 @@ textarea {
     width: 100%;
     position: relative;
 }
-
+.drop-menu li{
+    width: 100%;
+    position: relative;
+}
 .main-menu nav ul li > ul.drop-menu li a {
     color: #ffffff;
     margin: 0;
@@ -328,7 +344,13 @@ textarea {
     padding: 12px 0px;
     padding-left: 15px;
 }
-
+.drop-menu li a {
+    color: #ffffff;
+    margin: 0;
+    display: block;
+    padding: 12px 0px;
+    padding-left: 15px;
+}
 .main-menu nav ul li > ul.drop-menu li a:hover, .main-menu nav ul li > ul.drop-menu li.active a{
     background: #323939;
     color: #f26522;

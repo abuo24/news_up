@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {FaRegClock, HiMail, HiPhone, ImLocation} from "react-icons/all";
 
 import GoogleMapReact from 'google-map-react';
 import {postsApi} from "../../redux/service/postsApi";
 import {toast, ToastContainer} from "react-toastify";
+import {connect} from "react-redux";
 
 const AnyReactComponent = ({text}) => <div>{text}</div>;
 
-const Contact = () => {
+const Contact = (props) => {
 
     const defaultProps = {
         center: {
@@ -16,6 +17,15 @@ const Contact = () => {
         },
         zoom: 11
     };
+
+    const [lang, setLang] = useState(true)
+    const [langs, setLangs] = useState(props.langReducer.lang)
+
+    useEffect(() => {
+            setLang(props.langReducer.type == "uz" ? true : false)
+            setLangs(props.langReducer.lang)
+        }
+    )
     return (
         <div>
 
@@ -41,19 +51,19 @@ const Contact = () => {
                     <div className="col-md-6">
                         <div className="row">
                             <div className="contact-info">
-                                <h4>Contact Info</h4>
+                                <h4>{langs.contact}</h4>
                                 <ul>
                                     <li>
                                         <article>
                                             <ImLocation/>
-                                            <h5>address</h5>
+                                            <h5>{langs.address}</h5>
                                             <p>Amur Temur sh.k 108<br/>Tashkent, Uzbekistan</p>
                                         </article>
                                     </li>
                                     <li>
                                         <article>
                                             <HiPhone></HiPhone>
-                                            <h5>phone</h5>
+                                            <h5>{langs.phone}</h5>
                                             <p>+998 93 209 99 24<br/>+998 93 208 99 24</p>
                                         </article>
                                     </li>
@@ -67,7 +77,7 @@ const Contact = () => {
                                     <li>
                                         <article>
                                             <FaRegClock></FaRegClock>
-                                            <h5>working hours</h5>
+                                            <h5></h5>
                                             <p>Monday-Friday: 8am-8pm<br/>Saturday 9am-1pm</p>
                                         </article>
                                     </li>
@@ -77,7 +87,7 @@ const Contact = () => {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                          <SendMessage/>
+                          <SendMessage lang={langs}/>
                         </div>
                     </div>
                 </div>
@@ -117,23 +127,23 @@ class SendMessage extends Component {
     render() {
         return (
             <div className="contact-write">
-                <h4>Contact Info</h4>
+                <h4>{this.props.lang&&this.props.lang.contact}</h4>
                 <div className="cw-form">
                     <form onSubmit={this.onSubmit} >
                         <div className="input">
-                            <label htmlFor="fname">First Name</label>
+                            <label htmlFor="fname">{this.props.lang&&this.props.lang.name}</label>
                             <input required onChange={e => (this.setState({...this.state, firstName: e.target.value}))} className="for_input_message"  type="text" id="fname" name="fname"/>
                         </div>
                         <div className="input last-name">
-                            <label htmlFor="sname">Second Name</label>
+                            <label htmlFor="sname">{this.props.lang&&this.props.lang.subname}</label>
                             <input required onChange={e => (this.setState({...this.state, lastName: e.target.value}))}  className="for_input_message"  type="text" id="sname" name="sname"/>
                         </div>
                         <div className="text-area">
-                            <label htmlFor="msg">Message</label>
+                            <label htmlFor="msg">{this.props.lang&&this.props.lang.textMes}</label>
                             <textarea required onChange={e => (this.setState({...this.state, message: e.target.value}))}  className="for_input_message" name="msg" id="msg"/>
                         </div>
                         <div className="send-btn">
-                            <input type="submit" value="Xabarni Yuborish" name="send"/>
+                            <input type="submit" value={this.props.lang&&this.props.lang.send} name="send"/>
                             <ToastContainer/>
                         </div>
                     </form>
@@ -143,4 +153,7 @@ class SendMessage extends Component {
     }
 }
 
-export default Contact;
+const mstp  = state => state;
+
+
+export default connect(mstp, null)(Contact);

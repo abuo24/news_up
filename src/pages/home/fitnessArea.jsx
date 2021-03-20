@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {CategoryCard} from "../cards/categoryCard.jsx";
 import {connect} from "react-redux";
+import CategoryCard from "../cards/categoryCard";
 
 
 class FitnessArea extends Component {

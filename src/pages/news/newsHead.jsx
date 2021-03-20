@@ -5,7 +5,21 @@ import {getFile} from "../../server/host";
 
 class NewsHead extends Component {
 
-    componentDidUpdate() {
+    componentDidMount() {
+        this.setState({
+            lang: this.props.langReducer.type == "uz" ? true : false,
+            langs: this.props.langReducer.lang
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.lang !== (this.props.langReducer.type == "uz" ? true : false)) {
+            this.setState({
+                ...this.state,
+                lang: this.props.langReducer.type == "uz" ? true : false,
+                langs: this.props.langReducer.lang,
+            })
+        }
     }
 
     render() {
@@ -17,9 +31,11 @@ class NewsHead extends Component {
 
         const getMiddleHomeCards = this.props.post_reducer.posts && this.props.post_reducer.posts.data && this.props.post_reducer.posts.data.map((item, keyword) =>
             <HomeCard key={key++}
-                      title={item.title} views={item.viewsCount} to={item.id} like={item.likesCount}
+                      title={this.state && this.state.lang && this.state.lang ? item.titleUz : item.titleRu}
+                      views={item.viewsCount} to={item.id} like={item.likesCount}
                       date={item.createAt.slice(0, 11)} img={getFile + item.headAttachment.hashId}
-                      comment={item.comments} content={item.content}/>
+                      comment={item.comments}
+                      content={this.state && this.state.lang && this.state.lang ? item.contentUz : item.contentRu}/>
         );
 
 
@@ -31,7 +47,7 @@ class NewsHead extends Component {
                             <div className="top-bar-slider ls-slider owl-carousel">
                                 <div className="lifestyle-slider-item">
                                     <div className="section-top-bar">
-                                        <h4>Oxirgi Yangiliklar</h4>
+                                        <h4>{this.state&&this.state.langs&&this.state.langs.latestNews}</h4>
                                     </div>
                                     <div className="row">
                                         {getMiddleHomeCards}

@@ -1,14 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import img from "../../../img/post-img/entertainment/entertainment-img2.jpg"
 import {AiTwotoneRightCircle, BiCalendarAlt, FaComment} from "react-icons/all";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {getFile} from "../../../server/host";
+import langReducer from "../../../redux/reducers/langReducer";
 
 const BlogEnter = (props) => {
 
+    const [lang, setLang] = useState(true)
+    const [langs, setLangs] = useState(props.langReducer.lang)
+
+    useEffect(() => {
+            setLang(props.langReducer.type == "uz" ? true : false)
+            setLangs(props.langReducer.lang)
+        }
+    )
+
     const getBlogs = props.post_reducer&&props.post_reducer.posts&&props.post_reducer.posts.data&&props.post_reducer.posts.data.map((item, key)=>(
-        <BlogEnterItem category={item.category} img={getFile+item.headAttachment.hashId} comment={item.comments} date={item.createAt} title={item.title} to={"/blog/"+item.id} key={key}/>
+        <BlogEnterItem category={lang?item.category.nameUz:item.category.nameRu} img={getFile+item.headAttachment.hashId} comment={item.comments} date={item.createAt} title={lang?item.titleUz:item.titleRu} to={"/blog/"+item.id} key={key}/>
         ))
 
     return (
@@ -17,7 +27,7 @@ const BlogEnter = (props) => {
                 <div className="row">
                     <div className="col-xs-12">
                         <div className="section-top-bar">
-                            <h4>Tavsiya qilamiz</h4>
+                            <h4>{langs.foryou}</h4>
                         </div>
                     </div>
                 </div>
@@ -36,7 +46,7 @@ const BlogEnterItem = ({img, category, date, comment, to, title}) => {
                 <img src={img} alt="entertainment-img"/>
                 <div className="trd-post-info">
                     <div className="trd-desc-crumbs crmbs-one">
-                        <span className="trd-cat">{category.name}<AiTwotoneRightCircle/></span>
+                        <span className="trd-cat">{category}<AiTwotoneRightCircle/></span>
                         <span><BiCalendarAlt/>{date}</span>
                         <span><FaComment/>{comment===undefined?0:comment.length}</span>
                     </div>

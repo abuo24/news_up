@@ -3,15 +3,22 @@ import {BsFillHeartFill, BsHeart, FaComment, WiTime9} from "react-icons/all";
 import {bindActionCreators} from "redux";
 import {getNewsByCategoryId} from "../../redux/actions/categoryApi";
 import {connect} from "react-redux";
-import { axiosInstanceAdmin, getFile} from "../../server/host";
+import {axiosInstanceAdmin, getFile} from "../../server/host";
 import {NavLink} from "react-router-dom";
 import {postsApi} from "../../redux/service/postsApi";
 
-export class CategoryCard extends Component {
+class CategoryCard extends Component {
 
-state = {
+    state = {
+        lang: true
+    }
 
-}
+    componentDidMount() {
+        this.setState({...this.state,
+            lang:this.props.langReducer && this.props.langReducer.type == "uz" ? true : false
+        })
+    }
+
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -21,6 +28,12 @@ state = {
                     this.setState({res});
                 }
             ).catch(err => console.log(err));
+        }
+        if (this.state.lang !== (this.props.langReducer.type=="uz"?true:false)){
+            this.setState({
+                ...this.state,
+                lang: this.props.langReducer.type == "uz" ? true : false
+            })
         }
     }
 
@@ -32,21 +45,22 @@ state = {
                     <div className="row">
                         <div className="col-xs-12">
                             <div className="section-top-bar">
-                                <h4>{this.props.category && this.props.category.name}</h4>
+                                <h4>{this.state.lang ? this.props.category.nameUz : this.props.category.nameRu}</h4>
                             </div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="ft-slider-area">
                             {
-                                this.state.res && this.state.res.data && this.state.res.data.data.news.slice(0,2).map(
+                                this.state.res && this.state.res.data && this.state.res.data.data.news.slice(0, 2).map(
                                     (item, key) =>
-                                        (<CategoryCardItem id={item.id} key={key} img={getFile + item.headAttachment.hashId}
-                                                           category={item.category}
+                                        (<CategoryCardItem id={item.id} key={key}
+                                                           img={getFile + item.headAttachment.hashId}
+                                                           category={this.state.lang?item.category.nameUz:item.category.nameRu}
                                                            comment={item.comments}
                                                            to={"/blog/" + item.id} like={item.likesCount}
                                                            date={item.createAt.slice(0, 11)}
-                                                           title={item.title}/>))
+                                                           title={this.state.lang ? item.titleUz : item.titleRu}/>))
                             }
                         </div>
                     </div>
@@ -57,7 +71,7 @@ state = {
     }
 };
 
-const CategoryCardItem = ({id,to, category, img, title, date, like, comment}) => {
+const CategoryCardItem = ({id, to, category, img, title, date, like, comment}) => {
 
 
     let [likes, setLikes] = useState(0);
@@ -94,7 +108,7 @@ const CategoryCardItem = ({id,to, category, img, title, date, like, comment}) =>
             <div className="ft-slider-item">
                 <img src={img} alt="slider image"/>
                 <div className="ft-slider-text">
-                    <NavLink to={to} className="sl-post-cat">{category.name}</NavLink><br/>
+                    <NavLink to={to} className="sl-post-cat">{category}</NavLink><br/>
                     <NavLink to={to} className="sl-post-title">{title}</NavLink>
                     <div className="clearfix"></div>
                     <div className="meta-tag-area">
@@ -111,6 +125,6 @@ const CategoryCardItem = ({id,to, category, img, title, date, like, comment}) =>
 
 const mstp = (state) => (state);
 
-const mdtp = (dispatch) => (bindActionCreators({getNewsByCategoryId}, dispatch));
+const mdtp = (dispatch) => (bindActionCreators({}, dispatch));
 
 export default connect(mstp, mdtp)(CategoryCard);

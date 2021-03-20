@@ -16,12 +16,22 @@ class MiddleHomeCards extends Component {
             console.log(err)
         });
     }
-    state = {};
+    state = {
+        lang: this.props.langReducer.type=="uz"?true:false
+    };
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.lang !== (this.props.langReducer.type=="uz"?true:false)){
+            this.setState({
+                ...this.state,
+                lang: this.props.langReducer.type == "uz" ? true : false
+            })
+        }
+    }
 
     render() {
         const getBlogs = this.state.res&&this.state.res.payload&&this.state.res.payload.data.news.map((item, key) => (
-            <HomeCard key={key} to={item.id} img={getFile+item.headAttachment.hashId} title={item.title} date={item.createAt.slice(0,11)} views={item.viewsCount} like={item.likesCount}
-                      comment={item.comments} content={item.content}/>
+            <HomeCard key={key} to={item.id} img={getFile+item.headAttachment.hashId} title={this.state.lang?item.titleUz:item.titleRu} date={item.createAt.slice(0,11)} views={item.viewsCount} like={item.likesCount}
+                      comment={item.comments} content={this.state.lang?item.contentUz:item.contentRu}/>
         ));
 
 
@@ -32,7 +42,7 @@ class MiddleHomeCards extends Component {
         return (
             <div className="lifestyle-slider-item">
                 <div className="section-top-bar">
-                    <h4>{this.props.category.name}</h4>
+                    <h4>{this.state.lang?this.props.category.nameUz:this.props.category.nameRu}</h4>
                 </div>
                 <div className="row">
                     {getBlogs}

@@ -15,7 +15,7 @@ const HomeCard = ({to, img, title, date, views, like, comment, content}) => {
     }
     useEffect(()=>(
         like===null?setLikes(0):setLikes(like)
-    ),[])
+    ),[]);
 
     const getLikes = () => {
         !toogle ? postsApi.setLikes(to)

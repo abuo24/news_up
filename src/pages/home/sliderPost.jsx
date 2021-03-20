@@ -12,18 +12,20 @@ import {postsApi} from "../../redux/service/postsApi";
 const SliderPost = (props) => {
 
     const [posts, setPosts] = useState(null);
+    const [lang, setLang] = useState(true);
 
-    useEffect(() => (
+    useEffect(() => {
         setPosts(props.post_reducer.posts)
-    ));
+        setLang(props.langReducer.type == "uz" ? true : false)
+    });
 
     const getPost = posts != null && posts.data.slice(0, 3).map((item, key) => (
         <SlideItemHeader
             key={item.id}
             id={item.id}
             img={getFile + item.headAttachment.hashId}
-            category={item.category.name}
-            title={item.title}
+            category={lang?item.category.nameUz:item.category.nameRu}
+            title={lang?item.titleUz:item.titleRu}
             date={item.createAt.slice(0, 11)}
             like={item.likesCount == null ? 0 : item.likesCount}
             views={item.viewsCount}
@@ -60,7 +62,6 @@ const SliderPost = (props) => {
                 }, err => console.log(err))
     };
 
-
     return (
         <div className="slider-post-area clearfix">
             <div className="container-fluid  m-0 p-0">
@@ -72,9 +73,9 @@ const SliderPost = (props) => {
                                  alt="slider image"/>
                             <div className="slider-text">
                                 <NavLink to={"/blog/" + headPost.id} className="sl-post-cat"
-                                         href="#">{headPost.category.name}</NavLink>
+                                         href="#">{lang?headPost.category.nameUz:headPost.category.nameRu}</NavLink>
                                 <NavLink to={"/blog/" + headPost.id}
-                                         className="sl-post-title">{headPost.title}</NavLink>
+                                         className="sl-post-title">{lang?headPost.titleUz:headPost.titleRu}</NavLink>
                                 <div className="meta-autor">
                                     <img src={author} alt="author image"/>
                                     <div className="meta-tag-area">

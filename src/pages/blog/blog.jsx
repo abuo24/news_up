@@ -1,5 +1,4 @@
 import React from 'react';
-// import BlogFittnes from "./BlogContent/blogFittnes";
 import BlogEnter from "./BlogContent/blogEnter";
 import LatestVideo from "../home/latestVideo";
 import FitnessArea from "../home/fitnessArea";

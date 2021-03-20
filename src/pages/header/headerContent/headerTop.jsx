@@ -20,7 +20,7 @@ const HeaderTop = (props) => {
     useEffect(() => {
         weatherApi.getWeather().then(
             res => {
-                    setWeather({...res})
+                setWeather({...res})
             }
         ).catch(
             err => {
@@ -46,6 +46,8 @@ const HeaderTop = (props) => {
                                     className={"h-weather"}>{weather.data && weather.data.main && Math.floor(weather.data.main.temp) - 273}<sup>o</sup></span>
                             </div>
                         </div>
+
+
                         <div className={"col-md-6 col-sm-6 col-xs-12"}>
                             <div className={"h-social-area"}>
                                 <FaFacebookF></FaFacebookF>

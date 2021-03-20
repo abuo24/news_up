@@ -16,13 +16,25 @@ class App extends Component {
 
     state = {
         isRequest: true,
-        posts: {}
+        posts: {},
+        lang: localStorage.getItem("lang")
     };
 
     componentDidMount() {
         this.props.getCategories();
         this.props.allPosts();
-        this.props.getPopularPosts().then(res => this.setState({isRequest: false}), err => console.log(err));
+        this.setState({...this.state, lang: this.props.langReducer.type});
+        this.props.getPopularPosts().then(res => this.setState({...this.state,isRequest: false}), err => console.log(err));
+
+        // debugger
+    }
+    componentDidUpdate() {
+        if (this.props.langReducer.type!==this.state.lang){
+            this.props.getCategories()
+            this.setState({...this.state,lang:this.props.langReducer.type})
+            this.props.allPosts();
+            this.props.getPopularPosts()
+        }
     }
 
     render() {

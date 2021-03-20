@@ -19,8 +19,30 @@ class BlogContentItem extends Component {
         author: "",
         authorMail: "",
         comments_id: "",
-        message: ""
+        message: "",
+        langs: this.props.langReducer.lang
+    };
+
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            lang: this.props.langReducer.type == "uz" ? true : false,
+            langs: this.props.langReducer.lang
+        })
     }
+
+    componentDidUpdate() {
+
+        if (this.state.lang !== (this.props.langReducer.type == "uz" ? true : false)) {
+            this.setState({
+                ...this.state,
+                lang: this.props.langReducer.type == "uz" ? true : false,
+                langs: this.props.langReducer.lang
+            })
+        }
+
+    }
+
 
     note = () => toast.success("Saqlandi")
 
@@ -44,28 +66,29 @@ class BlogContentItem extends Component {
         return (
             <div className="col-md-8 col-sm-8">
                 <div className="blog-post-details">
-                    <p className="blog-text"  dangerouslySetInnerHTML={{ __html: post && post.content }}>
+                    <p className="blog-text"
+                       dangerouslySetInnerHTML={{__html: post && this.state.lang ? post && post.contentUz : post && post.contentRu}}>
                     </p>
 
                     <div className="bp-tag-area">
-                        <h4>Teglar</h4>
+                        <h4>{this.state.langs.tags}</h4>
                         <div className="row">
                             <div className="col-xs-8">
                                 <div className="bp-tags">
                                     {
-                                        post&&post.tags.map((item)=>(
-                                            <a key={item.id}>{item.tag}</a>
+                                        post && post.tags.map((item) => (
+                                            <a key={item.id}>{this.state.lang ? item && item.tagUz && item.tagUz : item && item.tagRu && item.tagRu}</a>
                                         ))
-                                    }</div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="related-product">
-                    <h3 className="related-title">Oxirgi Yangiliklar</h3>
+                    <h3 className="related-title">{this.state.langs.latestNews}</h3>
                     <div className="row">
-
                         {posts &&
                         posts.map((item) => (
                             <div key={item.id} className="col-md-6 col-sm-6">
@@ -74,11 +97,11 @@ class BlogContentItem extends Component {
                                         <img src={getFile + item.headAttachment.hashId}
                                              alt="related post image"/>
                                         <NavLink to={"/blog/" + item.id}
-                                                 className="related-cat">{item.category.name}</NavLink>
+                                                 className="related-cat">{this.state.lang ? item.category.nameUz : item.category.nameRu}</NavLink>
                                     </div>
                                     <p className="rlted-date">{item.createAt}</p>
                                     <NavLink to={"/blog/" + item.id}>
-                                        <p className="post-by">{item.title}</p>
+                                        <p className="post-by">{this.state.lang ? item.titleUz : item.titleRu}</p>
                                     </NavLink>
                                 </div>
                             </div>
@@ -90,7 +113,7 @@ class BlogContentItem extends Component {
                 <div className="comments">
                     <div className="comments-count">
                         <h4>
-                            <span>{post && post.comments !== undefined && post.comments.length !== 0 ? post.comments.length : "0"}</span>Izohlar
+                            <span>{post && post.comments !== undefined && post.comments.length !== 0 ? post.comments.length : "0"}</span>{this.state.langs.comment}
                         </h4>
                     </div>
                     <ul>{post && post.comments && post.comments.map((item) => (
@@ -165,7 +188,7 @@ class BlogContentItem extends Component {
                     </ul>
                 </div>
                 <div className="comment-responsd">
-                    <h4>Izoh yoki Izohlarga Javob qoldiring:)</h4>
+                    <h4>{this.state.langs.commentwrite}</h4>
                     <div className="contact-form">
                         {this.obj && <ul className="children">
                             <li>
@@ -209,7 +232,7 @@ class BlogContentItem extends Component {
                                               className="contact-textarea for_input" id="msg" name="msg" required/>
                                 </div>
                                 <div className="col-md-12 col-sm-12">
-                                    <button className="cont-submit" id="submit" name="submit" type="submit">Yuborish
+                                    <button className="cont-submit" id="submit" name="submit" type="submit">{this.state.langs.submit}
                                     </button>
                                     <ToastContainer autoClose={2000}/>
                                 </div>

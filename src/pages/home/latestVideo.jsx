@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Slider from "react-slick";
 import slider1 from "../../img/slider-img/lt-video/ltv-img1.jpg";
 import {BiTime, BsPlayFill, ImEye, IoHeartOutline} from "react-icons/all";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-const LatestVideo = () => {
+const LatestVideo = (props) => {
 
     const [toogle, setToogle] = useState(false);
 
@@ -84,13 +85,21 @@ const LatestVideo = () => {
         <LatestVideoItem key={key} title={item.title} date={item.date} slider={item.slider} like={item.like} to={item.to} link={item.link} views={item.views}/>
     ));
 
+    const [lang, setLang] = useState(true)
+    const [langs, setLangs] = useState(props.langReducer.lang)
+
+    useEffect(() => {
+            setLang(props.langReducer.type == "uz" ? true : false)
+            setLangs(props.langReducer.lang)
+        }
+    )
 
     return (
         <div className="letest-video-area">
             <div className="container">
                 <div className="letest-video">
-                    <h1 className="d-block">Oxirgi Videolar</h1>
-                    <a className="view-all d-block" href="#">Hammasini ko'rish</a>
+                    <h1 className="d-block">{langs.latestVid}</h1>
+                    <a className="view-all d-block" href="#">{langs.reedMore}</a>
                     <Slider {...settings}
                             className="lt-video-slider"
                     >
@@ -120,6 +129,8 @@ const LatestVideoItem = ({slider, link, date, views, like, title, to}) => {
             <NavLink to={to}>{title}</NavLink>
         </div>
     )
-}
+};
 
-export default LatestVideo;
+const mstp = state =>state;
+
+export default connect(mstp,null)(LatestVideo);
