@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getCategories} from "./redux/actions/categoryApi";
 import 'react-toastify/dist/ReactToastify.css';
+import {allVideoPosts} from "./redux/actions/videoPostApi";
 
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
     componentDidMount() {
         this.props.getCategories();
         this.props.allPosts();
+        this.props.allVideoPosts()
         this.setState({...this.state, lang: this.props.langReducer.type});
         this.props.getPopularPosts().then(res => this.setState({...this.state,isRequest: false}), err => console.log(err));
 
@@ -31,6 +33,7 @@ class App extends Component {
     componentDidUpdate() {
         if (this.props.langReducer.type!==this.state.lang){
             this.props.getCategories()
+            this.props.allVideoPosts()
             this.setState({...this.state,lang:this.props.langReducer.type})
             this.props.allPosts();
             this.props.getPopularPosts()
@@ -64,6 +67,6 @@ class App extends Component {
 
 const mstp = state => (state);
 
-const mdtp = dispatch => (bindActionCreators({allPosts, getPopularPosts, getCategories}, dispatch));
+const mdtp = dispatch => (bindActionCreators({allPosts, getPopularPosts, getCategories,allVideoPosts}, dispatch));
 
 export default connect(mstp, mdtp)(App);

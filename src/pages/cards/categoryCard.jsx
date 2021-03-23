@@ -45,7 +45,7 @@ class CategoryCard extends Component {
                     <div className="row">
                         <div className="col-xs-12">
                             <div className="section-top-bar">
-                                <h4>{this.state.lang ? this.props.category.nameUz : this.props.category.nameRu}</h4>
+                                <h4>{this.state.lang ? this.props&&this.props.category&&this.props.category.nameUz : this.props&&this.props.category&&this.props.category.nameRu}</h4>
                             </div>
                         </div>
                     </div>

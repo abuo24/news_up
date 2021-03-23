@@ -92,10 +92,10 @@ class TwitchContent extends Component {
                                 </div>
                                 <div className="row tab-content">
                                     <div className="letest-news tab-pane fade in active" role="tabpanel" id="all">
-                                        {posts && <HeadItem post={posts[0]}
-                                                            content={this.state.lang ? posts[0].contentUz : posts[0].contentRu}
-                                                            title={this.state.lang ? posts[0].titleUz : posts[0].titleRu}
-                                                            name={this.state.lang ? posts[0].category.nameUz : posts[0].category.nameRu}/>}
+                                        {posts && <HeadItem post={posts[0]&&posts[0]}
+                                                            content={this.state.lang ? posts[0]&&posts[0].contentUz : posts[0]&&posts[0].contentRu}
+                                                            title={this.state.lang ?  posts[0]&&posts[0].titleUz : posts[0]&&posts[0].titleRu}
+                                                            name={this.state.lang ?  posts[0]&&posts[0].category.nameUz : posts[0]&&posts[0].category.nameRu}/>}
                                         <div className="col-md-6 col-sm-6">
                                             {getMiniCards}
                                         </div>
@@ -174,14 +174,11 @@ const HeadItem = ({post, content, title, name}) => {
         !toogle ? postsApi.setLikes(post.id)
                 .then(
                     res => {
-                        // console.log(res);
                         setLikes(++likes)
-                    }
-                    ,
+                    },
                     err => console.log(err))
             : postsApi.setDisLikes(post.id)
                 .then(res => {
-                    // console.log(res);
                     setLikes(--likes)
                 }, err => console.log(err))
     };
@@ -193,25 +190,25 @@ const HeadItem = ({post, content, title, name}) => {
                     {post && post.headAttachment && post.headAttachment.hashId != null ?
                         <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
                     <div className="lt-thumb-desc">
-                        <Link className="ln-post-cat" to={'/blog/' + post.id}
-                              href="#">{name}</Link>
+                        <Link className="ln-post-cat" to={'/blog/' + post&&post!=null&&post!=undefined&&post.id&&post.id!=undefined&&post.id!=null&&post.id}
+                              href="#">{name&&name}</Link>
                         {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
-                                <span><WiTime9></WiTime9>{post.createAt}</span>
+                                <span><WiTime9></WiTime9>{post&&post.createAt}</span>
                                 <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                     {likes}</span>
-                                <span><FaComment></FaComment>{post.comments.length}</span>
+                                <span><FaComment></FaComment>{post&&post.comments.length}</span>
                             </div>
                         </div> : ""}
                     </div>
                 </div>
                 <>
                     <Link className={"lt-snlg-title "} href="#"
-                          to={'/blog/' + post.id}>
-                        {title}
+                          to={'/blog/' + post&&post!=null&&post!=undefined&&post.id&&post.id!=undefined&&post.id!=null&&post.id}>
+                        {title&&title}
                     </Link>
-                    <p className="df-text" dangerouslySetInnerHTML={{__html: content.slice(0, 100)}}/>
+                    <p className="df-text" dangerouslySetInnerHTML={{__html: content&&content.slice(0, 100)}}/>
                 </>
             </div>
         </div>

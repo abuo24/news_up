@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Slider from "react-slick";
-import slider1 from "../../img/slider-img/lt-video/ltv-img1.jpg";
-import {BiTime, BsPlayFill, ImEye, IoHeartOutline} from "react-icons/all";
-import {NavLink} from "react-router-dom";
-import {connect} from "react-redux";
+import {connect} from "react-redux"
+import "antd/dist/antd.min.css"
+// import "video-react/dist/video-react.css";
+import LatestVideoItem from "./latestVideoItem";
 
 const LatestVideo = (props) => {
 
@@ -28,69 +28,21 @@ const LatestVideo = (props) => {
         }]
     });
 
-    const [videos, setVideos] = useState([
-        {
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/3'
-        },
-        {
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/3'
-        },{
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/1'
-        },{
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/1'
-        },{
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/1'
-        },{
-            slider: slider1,
-            link: "https://www.youtube.com/watch?v=qWy_aOlB45Y",
-            date: "01 Mart 2020",
-            views: "15K",
-            like: "300",
-            title: "Japan In Four Gorgeous Pokémon-Themed Colors",
-            to: '/blog/1'
-        }
-    ]);
+    console.log(props.posts && props.posts.data && props.posts.data.news);
 
-    const getVideos = videos.map((item, key) => (
-        <LatestVideoItem key={key} title={item.title} date={item.date} slider={item.slider} like={item.like} to={item.to} link={item.link} views={item.views}/>
-    ));
-
+    const [videos, setVideos] = useState(props.posts && props.posts.data && props.posts.data.news)
     const [lang, setLang] = useState(true)
     const [langs, setLangs] = useState(props.langReducer.lang)
+
+    const getVideos = videos && videos.map((item, key) => (
+        <LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/>
+    ));
+
 
     useEffect(() => {
             setLang(props.langReducer.type == "uz" ? true : false)
             setLangs(props.langReducer.lang)
+            setVideos(props.video_post_reducer.posts && props.video_post_reducer.posts.data && props.video_post_reducer.posts.data.news)
         }
     )
 
@@ -110,27 +62,7 @@ const LatestVideo = (props) => {
         </div>
     );
 };
-const LatestVideoItem = ({slider, link, date, views, like, title, to}) => {
-    return (
-        <div className="lt-video-item item">
-            <div className="ltv-thumb">
-                <img src={slider} alt="video thumbnail"/>
-                <a className="lt-video"
-                   href={link} target="_blank">
-                    <BsPlayFill>
-                    </BsPlayFill>
-                </a>
-            </div>
-            <div className="cmn-tag-area">
-                <span><BiTime></BiTime>{date}</span>
-                <span><ImEye></ImEye>{views}</span>
-                <span><IoHeartOutline></IoHeartOutline>{like}</span>
-            </div>
-            <NavLink to={to}>{title}</NavLink>
-        </div>
-    )
-};
 
-const mstp = state =>state;
+const mstp = state => state;
 
-export default connect(mstp,null)(LatestVideo);
+export default connect(mstp, null)(LatestVideo);
