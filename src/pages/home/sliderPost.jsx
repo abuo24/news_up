@@ -19,18 +19,7 @@ const SliderPost = (props) => {
         setLang(props.langReducer.type == "uz" ? true : false)
     });
 
-    const getPost = posts != null && posts.data.slice(1, 4).map((item, key) => (
-        <SlideItemHeader
-            key={item.id}
-            id={item.id}
-            img={getFile + item.headAttachment.hashId}
-            category={lang ? item.category.nameUz : item.category.nameRu}
-            title={lang ? item.titleUz : item.titleRu}
-            date={item.createAt.slice(0, 11)}
-            like={item.likesCount == null ? 0 : item.likesCount}
-            views={item.viewsCount}
-            comment={item.comments == null ? 0 : item.comments.length}
-        />));
+
 
     const headPost = props.post_reducer.popular_posts && props.post_reducer.popular_posts.data && props.post_reducer.popular_posts.data[0];
 
@@ -58,7 +47,18 @@ const SliderPost = (props) => {
                     setLikes(--likes)
                 }, err => console.log(err))
     };
-
+    const getPost = posts != null && posts.data.reverse().slice(0, 3).map((item, key) => (
+        <SlideItemHeader
+            key={item.id}
+            id={item.id}
+            img={getFile + item.headAttachment.hashId}
+            category={lang ? item.category.nameUz : item.category.nameRu}
+            title={lang ? item.titleUz : item.titleRu}
+            date={item.createAt.slice(0, 11)}
+            like={item.likesCount == null ? 0 : item.likesCount}
+            views={item.viewsCount}
+            comment={item.comments == null ? 0 : item.comments.length}
+        />));
     return (
         <div className="slider-post-area clearfix">
             <div className="container-fluid  m-0 p-0">

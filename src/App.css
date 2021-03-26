@@ -3634,7 +3634,19 @@ p.for-clk a {
     overflow: hidden;
     position: relative;
 }
-
+.slider-post-area {
+    margin: 0 auto;
+    max-width: 1380px!important;
+}
+.blg-slider-text {
+    margin: 0 auto;
+}
+.for_blog_img img
+{
+    max-height: 600px!important;
+    object-fit: cover;
+    position: center;
+}
 .input input {
     width: 100%;
     padding-left: 25px;

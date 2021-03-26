@@ -13,7 +13,7 @@ const BlogSlider = (props) => {
         },[]);
 
     return (
-        <div>
+        <div className={"for_blog_img"}>
             <div className="blog-post-slider">
                 <div className="container">
                     <div className="row">

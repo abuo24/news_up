@@ -13,8 +13,7 @@ class LatestVideoItem extends Component {
     };
 
     componentDidMount() {
-        console.log(this)
-    }
+       }
 
 
     hideModal = () => {
