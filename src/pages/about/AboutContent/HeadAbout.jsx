@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import headimg from "../../../img/post-img/about-me/img-1.jpg";
-import headimg2 from "../../../img/post-img/about-me/img-2.jpg";
 import {connect} from "react-redux";
 
 const HeadAbout = (props) => {

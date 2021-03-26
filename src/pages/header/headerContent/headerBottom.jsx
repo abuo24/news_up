@@ -8,6 +8,7 @@ import LanguageChange from "./languageChange";
 import langReducer from "../../../redux/reducers/langReducer";
 import {bindActionCreators} from "redux";
 import {getCategories} from "../../../redux/actions/categoryApi";
+import {IconContext} from "react-icons";
 
 class HeaderBottom extends Component {
 
@@ -51,15 +52,15 @@ class HeaderBottom extends Component {
                                         <ul>
                                             <li><NavLink activeStyle={{
                                                 color: "#f26522"
-                                            }} to={"/"}>{this.state.langs&&this.state.langs.home}</NavLink>
+                                            }} to={"/"}>{this.state.langs && this.state.langs.home}</NavLink>
                                             </li>
                                             <li className={c(s.item_nav)}><NavLink activeStyle={{
                                                 color: "#f26522"
-                                            }} to={"/blog"}>{this.state.langs&&this.state.langs.blog}</NavLink></li>
+                                            }} to={"/blog"}>{this.state.langs && this.state.langs.blog}</NavLink></li>
 
                                             <li className={c(s.item_nav)}><NavLink activeStyle={{
                                                 color: "#f26522"
-                                            }} to={"/news"}>{this.state.langs&&this.state.langs.all}</NavLink>
+                                            }} to={"/news"}>{this.state.langs && this.state.langs.all}</NavLink>
                                                 <ul className="drop-menu mega-menu">
                                                     {this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map(
                                                         (item) =>
@@ -78,20 +79,33 @@ class HeaderBottom extends Component {
                                             </li>
                                             <li className={c(s.item_nav)}><NavLink activeStyle={{
                                                 color: "#f26522"
-                                            }} to={"/about"}>{this.state.langs&&this.state.langs.about}</NavLink>
+                                            }} to={"/about"}>{this.state.langs && this.state.langs.about}</NavLink>
                                             </li>
                                             <li className={c(s.item_nav)}><NavLink activeStyle={{
                                                 color: "#f26522"
-                                            }} to={"/contact"}>{this.state.langs&&this.state.langs.contact}</NavLink>
+                                            }} to={"/contact"}>{this.state.langs && this.state.langs.contact}</NavLink>
                                             </li>
                                             <LanguageChange/>
                                             <li className={c(s.bars)} onClick={() => {
                                                 this.onChange()
-                                            }}>{!this.state.toogle ? <FaBars></FaBars> : <BiMinus></BiMinus>}</li>
+                                            }}>{!this.state.toogle ?
+                                                <IconContext.Provider style={{padding: "7px"}}
+                                                                      value={{
+                                                                          color: "white",
+                                                                          className: "global-class-name"
+                                                                      }}>
+                                                    <div><FaBars/></div>
+                                                </IconContext.Provider> : <IconContext.Provider style={{padding: "7px"}}
+                                                                                                value={{
+                                                                                                    color: "white",
+                                                                                                    className: "global-class-name"
+                                                                                                }}>
+                                                    <div><BiMinus/></div>
+                                                </IconContext.Provider>}</li>
                                             {this.state.toogle && <div>
                                                 <li><NavLink activeStyle={{
                                                     color: "#f26522"
-                                                }} to={"/news"}>{this.state.langs&&this.state.langs.all}</NavLink>
+                                                }} to={"/news"}>{this.state.langs && this.state.langs.all}</NavLink>
                                                     <ul className="drop-menu">
                                                         {this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map(
                                                             (item) =>
@@ -99,23 +113,24 @@ class HeaderBottom extends Component {
                                                                     <li key={item.id}>
                                                                         <NavLink
                                                                             to={{
-                                                                                pathname: "/news/" + item.name.toLowerCase(),
-                                                                                state: {
-                                                                                    item
-                                                                                }
+                                                                                pathname: "/news/" + item.id,
                                                                             }}>
-                                                                            {item.name}
+                                                                            {this.state.lang ? item.nameUz : item.nameRu}
                                                                         </NavLink>
                                                                     </li>
                                                                 ))
                                                         }
                                                     </ul>
                                                 </li>
-                                                <li><NavLink to={"/blog"}>{this.state.langs&&this.state.langs.blog}</NavLink></li>
-                                                <li><NavLink to={"/about"}>{this.state.langs&&this.state.langs.about}</NavLink>
+                                                <li><NavLink
+                                                    to={"/blog"}>{this.state.langs && this.state.langs.blog}</NavLink>
                                                 </li>
-                                                <li><NavLink to={"/contact"}>{this.state.langs&&this.state.langs.contact}</NavLink></li>
-                                                <LanguageChange/>
+                                                <li><NavLink
+                                                    to={"/about"}>{this.state.langs && this.state.langs.about}</NavLink>
+                                                </li>
+                                                <li><NavLink
+                                                    to={"/contact"}>{this.state.langs && this.state.langs.contact}</NavLink>
+                                                </li>
                                             </div>
                                             }
                                         </ul>

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {AiOutlineYoutube, FaComment, FaFacebookF, FaTwitter, WiTime9} from "react-icons/all";
-import layimg from "../../../img/side-bar/most-populer/msp-img1.jpg";
-import banner from "../../../img/banner/header-sidebar-banner3.jpg";
 import {connect} from "react-redux";
 import {getFile} from "../../../server/host";
 import {NavLink} from "react-router-dom";
+import {IconContext} from "react-icons";
+import {IoPlayOutline, IoTrashOutline, RiDeleteBin5Line} from "react-icons/all";
 
 const HeadSidebar = (props) => {
 
@@ -31,17 +31,35 @@ const HeadSidebar = (props) => {
             <div className="side-bar">
                 <div className="widget widget-h3-social">
                     <div className="widget-fb">
-                        <FaFacebookF/>
+                        <IconContext.Provider style={{padding: "7px"}}
+                                              value={{color: "white", size: "2em", className: "global-class-name"}}>
+                            <div>
+                                <FaFacebookF/>
+                            </div>
+                        </IconContext.Provider>
+
                         <h4>156,570</h4>
                         <h6>{langs.fanat}</h6>
                     </div>
                     <div className="widget-twitter">
-                        <FaTwitter/>
+                        <IconContext.Provider style={{padding: "7px"}}
+                                              value={{color: "white", size: "2em", className: "global-class-name"}}>
+                            <div>
+                                <FaTwitter/>
+                            </div>
+                        </IconContext.Provider>
                         <h4>3,562</h4>
                         <h6>{langs.seens}</h6>
                     </div>
                     <div className="widget-g-plus">
-                        <AiOutlineYoutube/>
+
+                        <IconContext.Provider style={{padding: "7px"}}
+                                              value={{color: "white", size: "2em", className: "global-class-name"}}>
+                            <div>
+                                <AiOutlineYoutube/>
+                            </div>
+                        </IconContext.Provider>
+
                         <h4>29,546</h4>
                         <h6>{langs.sub}</h6>
                     </div>
@@ -57,7 +75,7 @@ const HeadSidebar = (props) => {
                                      alt="image"/>
                                 <div className="wh3-litem-info">
                                     {list && list[0] && <NavLink
-                                        to={'/blog/' + list[0].id}>{lang?list[0].titleUz:list[0].titleRu}</NavLink>}
+                                        to={'/blog/' + list[0].id}>{lang ? list[0].titleUz : list[0].titleRu}</NavLink>}
                                     <div className="wh3-item-fback">
                                         <span><WiTime9/>{list && list[0] && list[0].createAt.slice(0, 11)}</span>
                                         <span><FaComment/>{list && list[0] && list[0].comments && list[0].comments.length}</span>
@@ -75,7 +93,8 @@ const HeadSidebar = (props) => {
                                 <div className="col-7">
                                     <div className="wh3-litem-info">
                                         <NavLink to={"/blog/" + item.id}>
-                                            <p  dangerouslySetInnerHTML={{ __html: lang?item.titleUz:item.titleRu }}></p></NavLink>
+                                            <p dangerouslySetInnerHTML={{__html: lang ? item.titleUz : item.titleRu}}></p>
+                                        </NavLink>
                                         <div className="wh3-item-fback">
                                             <span><WiTime9/>{item.createAt}</span>
                                             <span><FaComment/>{item.comments.length}</span>

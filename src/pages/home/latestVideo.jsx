@@ -2,8 +2,8 @@ import React, { useEffect, useState} from 'react';
 import Slider from "react-slick";
 import {connect} from "react-redux"
 import "antd/dist/antd.min.css"
-// import "video-react/dist/video-react.css";
 import LatestVideoItem from "./latestVideoItem";
+import {NavLink} from "react-router-dom";
 
 const LatestVideo = (props) => {
 
@@ -50,8 +50,8 @@ const LatestVideo = (props) => {
         <div className="letest-video-area">
             <div className="container">
                 <div className="letest-video">
-                    <h1 className="d-block">{langs.latestVid}</h1>
-                    <a className="view-all d-block" href="#">{langs.reedMore}</a>
+                    <h1 className="d-block for-latest-vidtext">{langs.latestVid}</h1>
+                    <NavLink className="view-all d-block" to={"/videos"}>{langs.reedMore}</NavLink>
                     <Slider {...settings}
                             className="lt-video-slider"
                     >

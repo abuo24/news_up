@@ -8,21 +8,18 @@ import {getCategories} from "../../../redux/actions/categoryApi";
 
 const LanguageChange = (props) => {
 
-    // useEffect(()=>{
-    //     // props.getCategories()
-    // },[props])
 
     return (
-            <div className={"dropdown d-inline-block float-right mt-3"}>
-                <div  className={"dropdown-toggle"} data-toggle="dropdown"> <img src={ props.langReducer&&props.langReducer.type == "uz" ? uz : ru } style={{width : "20px"}}/> { props.langReducer&&props.langReducer.type.toUpperCase() } </div>
+            <div className={"dropdown"} style={{position: "absolute",top:"15px","right":"50px"}}>
+                <div  className={"dropdown-toggle text-white"} data-toggle="dropdown"> <img src={ props.langReducer&&props.langReducer.type == "uz" ? uz : ru } style={{width : "20px"}}/> { props.langReducer&&props.langReducer.type=="uz"?props.langReducer.type.toUpperCase():'РУ' } </div>
                 <div className={"dropdown-menu dropdown-menu-right"}>
                     <div onClick={() =>{ props.changeRu();
                         localStorage.setItem("lang","ru")
-                    }} className="dropdown-item"> <img src={ru} alt="rus"/> Ru </div>
+                    }} className="dropdown-item"> <img src={ru} alt="rus"/> { props.langReducer&&props.langReducer.type=="uz"?'RU':'РУ'} </div>
                     <div onClick={() => {
-                        props.changeUz()
+                        props.changeUz();
                         localStorage.setItem("lang","uz")
-                    }}  className="dropdown-item"> <img src={uz} alt="uzbek"/> Uz </div>
+                    }}  className="dropdown-item"> <img src={uz} alt="uzbek"/> { props.langReducer&&props.langReducer.type=="uz"?'UZ':'УЗ'}  </div>
                 </div>
             </div>
 

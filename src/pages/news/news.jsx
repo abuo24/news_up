@@ -16,16 +16,6 @@ class News extends Component {
     }
 
 
-    // componentDidUpdate() {
-    // if (this.state.id !== this.props.location.state && this.props.location.state.item && this.props.location.state.item.id) {
-    //     this.onchange(this.props.location.state.item.id,this.props.location.state.item);
-    // }
-    // }
-    // componentDidUpdate: function(){
-    //     if (this.state.id !== this.props.location.state && this.props.location.state.item && this.props.location.state.item.id) {
-    //         // this.onchange(this.props.location.state.item.id, this.props.location.state.item);
-    //     }
-    // }
     componentDidUpdate(previousProps, previousState) {
         if (previousState.id !== this.props.match.params.id) {
             this.setState({
@@ -40,8 +30,6 @@ class News extends Component {
 
     render() {
 
-        console.log(this.state)
-        console.log(this.props)
         return (
             <div className="twich-content-area">
                 <div className="container">

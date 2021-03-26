@@ -21,13 +21,12 @@ const HomeCard = ({to, img, title, date, views, like, comment, content}) => {
         !toogle ? postsApi.setLikes(to)
                 .then(
                     res =>{
-                        console.log(res);
                         setLikes(++likes)
                     }
                         ,
                     err => console.log(err))
             : postsApi.setDisLikes(to)
-                .then(res => {console.log(res);
+                .then(res => {
                     setLikes(--likes)
                 }, err => console.log(err))
     }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import st from './footer.module.css'
+import './footer.module.css'
 import {Link, NavLink} from 'react-router-dom';
 import {
     AiOutlineHeart,
@@ -12,6 +12,7 @@ import {
 import {connect} from "react-redux";
 import {postsApi} from "../../redux/service/postsApi";
 
+import {IconContext} from "react-icons";
 
 const Footer = (props) => {
 
@@ -77,7 +78,16 @@ const Footer = (props) => {
                                     <h4 className={"ft-widget-title"}>Twitter</h4>
                                     <div className={"widget-twitter-item"}>
                                         <div className={"wti-post-icon"}>
-                                            <GrTwitter></GrTwitter>
+                                            <IconContext.Provider style={{}}
+                                                                  value={{
+                                                                      color: "white",
+                                                                      className: "global-class-name"
+                                                                  }}>
+
+                                                <div>
+                                                    <GrTwitter/>
+                                                </div>
+                                            </IconContext.Provider>
                                         </div>
                                         <div className={"wti-post-desc"}>
                                             <p>johan - themeforest PSD Template by <span
@@ -92,7 +102,16 @@ const Footer = (props) => {
                                     <span className={"wd-line"}></span>
                                     <div className={"widget-twitter-item"}>
                                         <div className={"wti-post-icon"}>
-                                            <GrTwitter></GrTwitter>
+                                            <IconContext.Provider style={{}}
+                                                                  value={{
+                                                                      color: "white",
+                                                                      className: "global-class-name"
+                                                                  }}>
+
+                                                <div>
+                                                    <GrTwitter/>
+                                                </div>
+                                            </IconContext.Provider>
                                         </div>
                                         <div className={"wti-post-desc"}>
                                             <p>Get more <span className={"wti-act"}>@creative</span> on <span
@@ -111,7 +130,9 @@ const Footer = (props) => {
             <div className={"footer-bottom"}>
                 <div className={"container"}>
                     <div className={"row"}>
-                        <p>Copyright@2017 Thmeforest.com</p>
+                        <p>Copyright@2021 by <a className=" link text-white text-bold" style={{}}
+                                                href="https://t.me/coderr24" target="_blank">Yunusjonov</a></p>
+
                     </div>
                 </div>
             </div>

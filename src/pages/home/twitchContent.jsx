@@ -50,13 +50,29 @@ class TwitchContent extends Component {
 
         const posts = this.props.post_reducer.posts && this.props.post_reducer.posts.data;
 
-        const getMiniCards = posts && posts.slice(0, 5).map((item, key) => (
+        const getMiniCards = posts && posts.slice(1, 6).map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
                       title={this.state.lang ? item.titleUz : item.titleRu}
                       content={this.state.lang ? item.contentUz : item.contentRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
-        const getMiniCardsPopular = list && list.slice(0, 5).map((item, key) => (
+        const d = new Date();
+        const endOfWeek = (date)=>
+        {
+
+            var lastday = date.getDate() - (date.getDay() - 1) -4;
+            return new Date(date.setDate(lastday));
+
+        }
+
+        // dt = new Date();
+
+        const data1 = endOfWeek(d)
+        console.log(data1)
+        // console.log(data1)
+        const data = data1&&(data1.getFullYear().toString()+"."+data1.getMonth()+1+"."+data1.getDay().toString)
+        console.log(data)
+        const getMiniCardsPopular = list && list.sort((a) => data < a.createAt&&a.createAt.slice(0,11) ? 1 : -1).slice(1, 6).map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
                       title={this.state.lang ? item.titleUz : item.titleRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
@@ -67,6 +83,7 @@ class TwitchContent extends Component {
         const settings = {
             dots: false,
             autoplay: true,
+            arrows: false,
             infinite: true,
             speed: 500,
             slidesToShow: 1,
@@ -82,50 +99,54 @@ class TwitchContent extends Component {
                         <div className="col-md-8 col-sm-8">
                             <div className="letest-news-area">
                                 <div className="section-top-bar">
-                                    <h4 className={"text-muted"}>{this.state.langs&&this.state.langs.latestNews}</h4>
+                                    <h4 className={"text-muted"}>{this.state.langs && this.state.langs.latestNews}</h4>
                                     <ul className={"text-muted"}>
-                                        <li role="presentation" className="active">
+                                        <li role="presentation" className="active d-inline-block">
                                             <a aria-controls="all" role="tab"
-                                               data-toggle="tab">{this.state.langs&&this.state.langs.all}</a>
+                                               data-toggle="tab">{this.state.langs && this.state.langs.all}</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="row tab-content">
                                     <div className="letest-news tab-pane fade in active" role="tabpanel" id="all">
-                                        {posts && <HeadItem post={posts[0]&&posts[0]}
-                                                            content={this.state.lang ? posts[0]&&posts[0].contentUz : posts[0]&&posts[0].contentRu}
-                                                            title={this.state.lang ?  posts[0]&&posts[0].titleUz : posts[0]&&posts[0].titleRu}
-                                                            name={this.state.lang ?  posts[0]&&posts[0].category.nameUz : posts[0]&&posts[0].category.nameRu}/>}
+                                        {posts && <HeadItem post={posts[0] && posts[0]}
+                                                            content={this.state.lang ? posts[0] && posts[0].contentUz : posts[0] && posts[0].contentRu}
+                                                            title={this.state.lang ? posts[0] && posts[0].titleUz : posts[0] && posts[0].titleRu}
+                                                            name={this.state.lang ? posts[0] && posts[0].category.nameUz : posts[0] && posts[0].category.nameRu}/>}
                                         <div className="col-md-6 col-sm-6">
                                             {getMiniCards}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className={"row"}>
+                                <div className={"col-12"}>
 
-                            <div className="top-bar-slider ls-slider owl-carousel">
-                                <Slider {...settings}>
-                                    {getMiddleHomeCards}
-                                </Slider>
+                                    <div className="top-bar-slider ls-slider">
+                                        <Slider {...settings}>
+                                            {getMiddleHomeCards}
+                                        </Slider>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-4">
                             <div className="side-bar">
                                 <div className="widget widget-social">
-                                    <div className="widget-fb">
+                                    <div className="widget-fb p-2">
                                         <FiInstagram></FiInstagram>
                                         <h4>4,000</h4>
-                                        <h6>{this.state.langs&&this.state.langs.fanat}</h6>
+                                        <h6>{this.state.langs && this.state.langs.fanat}</h6>
                                     </div>
-                                    <div className="widget-twitter">
+                                    <div className="widget-twitter p-2">
                                         <IoLogoTwitter></IoLogoTwitter>
                                         <h4>3,000</h4>
-                                        <h6>{this.state.langs&&this.state.langs.seens}</h6>
+                                        <h6>{this.state.langs && this.state.langs.seens}</h6>
                                     </div>
-                                    <div className="widget-g-plus">
+                                    <div className="widget-g-plus p-2">
                                         <GrYoutube></GrYoutube>
                                         <h4>2,000</h4>
-                                        <h6>{this.state.langs&&this.state.langs.sub}</h6>
+                                        <h6>{this.state.langs && this.state.langs.sub}</h6>
                                     </div>
                                 </div>
 
@@ -134,14 +155,14 @@ class TwitchContent extends Component {
                                     <div className="top-bar-slider owl-carousel">
                                         <div className="most-slider-item">
                                             <div className="section-top-bar">
-                                                <h4>{this.state.langs&&this.state.langs.maxseen}</h4>
+                                                <h4>{this.state.langs && this.state.langs.maxseen}</h4>
                                             </div>
                                             {getMiniCardsPopular}
                                         </div>
 
                                         <div className="most-slider-item">
                                             <div className="section-top-bar">
-                                                <h4>{this.state.langs&&this.state.langs.weektop}</h4>
+                                                <h4>{this.state.langs && this.state.langs.weektop}</h4>
                                             </div>
                                             {getMiniCardsPopular}
                                         </div>
@@ -167,7 +188,7 @@ const HeadItem = ({post, content, title, name}) => {
         getLikes();
     };
     useEffect(() => (
-        post && (post.likesCount === undefined || post.likesCount === undefined ? setLikes(0) : setLikes(post.likesCount))
+        post && (post.likesCount === undefined || post.likesCount === undefined || post.likesCount === null || post.likesCount == null ? setLikes(0) : setLikes(post.likesCount))
     ), [post]);
 
     const getLikes = () => {
@@ -190,25 +211,26 @@ const HeadItem = ({post, content, title, name}) => {
                     {post && post.headAttachment && post.headAttachment.hashId != null ?
                         <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
                     <div className="lt-thumb-desc">
-                        <Link className="ln-post-cat" to={'/blog/' + post&&post!=null&&post!=undefined&&post.id&&post.id!=undefined&&post.id!=null&&post.id}
-                              href="#">{name&&name}</Link>
+                        <Link className="ln-post-cat"
+                              to={'/blog/' + post && post != null && post != undefined && post.id && post.id != undefined && post.id != null && post.id}
+                              href="#">{name && name}</Link>
                         {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
-                                <span><WiTime9></WiTime9>{post&&post.createAt}</span>
+                                <span><WiTime9></WiTime9>{post && post.createAt}</span>
                                 <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                     {likes}</span>
-                                <span><FaComment></FaComment>{post&&post.comments.length}</span>
+                                <span><FaComment></FaComment>{post && post.comments.length}</span>
                             </div>
                         </div> : ""}
                     </div>
                 </div>
                 <>
                     <Link className={"lt-snlg-title "} href="#"
-                          to={'/blog/' + post&&post!=null&&post!=undefined&&post.id&&post.id!=undefined&&post.id!=null&&post.id}>
-                        {title&&title}
+                          to={'/blog/' + post && post != null && post != undefined && post.id && post.id != undefined && post.id != null && post.id}>
+                        {title && title}
                     </Link>
-                    <p className="df-text" dangerouslySetInnerHTML={{__html: content&&content.slice(0, 100)}}/>
+                    <p className="df-text" dangerouslySetInnerHTML={{__html: content && content.slice(0, 100)}}/>
                 </>
             </div>
         </div>

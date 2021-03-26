@@ -10,9 +10,7 @@ import {toast, ToastContainer} from "react-toastify";
 class BlogContentItem extends Component {
 
     componentWillUnmount() {
-        this.props.post && postsApi.setLikesAndViews(this.props.post.id).then(
-            res => console.log(res), err => console.log(err)
-        )
+        this.props.post && postsApi.setLikesAndViews(this.props.post.id)
     }
 
     state = {

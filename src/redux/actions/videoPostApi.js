@@ -7,6 +7,13 @@ export function allVideoPosts() {
         type:"GET_VIDEO_POSTS",
         payload: req
     }
+}export function allVideos() {
+    const req = axiosInstance.get("/videonews/all")
+        .then(res => res.data);
+    return {
+        type:"GET_VIDEOS",
+        payload: req
+    }
 }
 export function getPostByCategoryId(categoryid) {
     const req = axiosInstance.get("/admin/"+categoryid+"/shortnews/")

@@ -10,8 +10,7 @@ const BlogSlider = (props) => {
 
     useEffect(()=>{
       setLang(props.langReducer.type=="uz"?true:false)
-        console.log(props)
-    },[]);
+        },[]);
 
     return (
         <div>

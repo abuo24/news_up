@@ -3,13 +3,13 @@ import './App.css';
 import {Layout} from "./hoc";
 import {Route, Switch} from 'react-router-dom'
 import React from "react";
-import {About, Blog, BlogDetail, Contact, Home, News, NewsHead, NotFound} from "./pages";
+import {About, AllVideos, Blog, BlogDetail, Contact, Home, News, NewsHead, NotFound} from "./pages";
 import {allPosts, getPopularPosts} from "./redux/actions/postApi";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getCategories} from "./redux/actions/categoryApi";
 import 'react-toastify/dist/ReactToastify.css';
-import {allVideoPosts} from "./redux/actions/videoPostApi";
+import {allVideoPosts, allVideos} from "./redux/actions/videoPostApi";
 
 
 class App extends Component {
@@ -25,10 +25,10 @@ class App extends Component {
         this.props.getCategories();
         this.props.allPosts();
         this.props.allVideoPosts()
+        this.props.allVideos()
         this.setState({...this.state, lang: this.props.langReducer.type});
         this.props.getPopularPosts().then(res => this.setState({...this.state,isRequest: false}), err => console.log(err));
 
-        // debugger
     }
     componentDidUpdate() {
         if (this.props.langReducer.type!==this.state.lang){
@@ -57,6 +57,7 @@ class App extends Component {
                             <Route exact path='/blog/:id' component={BlogDetail}/>
                             <Route exact path='/news' component={NewsHead}/>
                             <Route exact path='/news/:id' component={News}/>
+                            <Route exact path='/videos' component={AllVideos}/>
                         </Layout>
                     </Switch>
                 </>
@@ -67,6 +68,6 @@ class App extends Component {
 
 const mstp = state => (state);
 
-const mdtp = dispatch => (bindActionCreators({allPosts, getPopularPosts, getCategories,allVideoPosts}, dispatch));
+const mdtp = dispatch => (bindActionCreators({allPosts,allVideos, getPopularPosts, getCategories,allVideoPosts}, dispatch));
 
 export default connect(mstp, mdtp)(App);

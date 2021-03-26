@@ -7,15 +7,15 @@ class FitnessArea extends Component {
 
     state = {};
     componentDidMount() {
-        this.setState(this.props.category_reducer.categories && this.props.category_reducer.categories[0]);
+        this.setState(this.props.category_reducer.categories && this.props.category_reducer.categories[1]);
     }
 
     render() {
         return (
             <div>
                 <CategoryCard
-                        id={this.props.category_reducer.categories&&this.props.category_reducer.categories[0]&&this.props.category_reducer.categories[0].id}
-                              category={this.props.category_reducer.categories && this.props.category_reducer.categories[0]}
+                        id={this.props.category_reducer.categories&&this.props.category_reducer.categories[1]&&this.props.category_reducer.categories[1].id}
+                              category={this.props.category_reducer.categories && this.props.category_reducer.categories[1]}
                 />
             </div>
         );

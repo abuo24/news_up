@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import author from '../../img/author-img/h1-author-img1.jpg';
 import {NavLink} from "react-router-dom";
-import {BsFillHeartFill, BsHeart, FaComment, WiTime9} from "react-icons/all";
+import {BsFillHeartFill, BsHeart, FaComment, FaUserTie, WiTime9} from "react-icons/all";
 import {getFile} from "../../server/host";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -19,13 +19,13 @@ const SliderPost = (props) => {
         setLang(props.langReducer.type == "uz" ? true : false)
     });
 
-    const getPost = posts != null && posts.data.slice(0, 3).map((item, key) => (
+    const getPost = posts != null && posts.data.slice(1, 4).map((item, key) => (
         <SlideItemHeader
             key={item.id}
             id={item.id}
             img={getFile + item.headAttachment.hashId}
-            category={lang?item.category.nameUz:item.category.nameRu}
-            title={lang?item.titleUz:item.titleRu}
+            category={lang ? item.category.nameUz : item.category.nameRu}
+            title={lang ? item.titleUz : item.titleRu}
             date={item.createAt.slice(0, 11)}
             like={item.likesCount == null ? 0 : item.likesCount}
             views={item.viewsCount}
@@ -43,21 +43,18 @@ const SliderPost = (props) => {
         getLikes();
     };
     useEffect(() => (
-        headPost&&(headPost.likesCount === undefined || headPost.likesCount === undefined ? setLikes(0) : setLikes(headPost.likesCount))
+        headPost && (headPost.likesCount === undefined || headPost.likesCount === undefined  || headPost.likesCount === null|| headPost.likesCount == null ? setLikes(0) : setLikes(headPost.likesCount))
     ), [headPost]);
 
     const getLikes = () => {
         !toogle ? postsApi.setLikes(headPost.id)
                 .then(
                     res => {
-                        // console.log(res);
                         setLikes(++likes)
-                    }
-                    ,
+                    },
                     err => console.log(err))
             : postsApi.setDisLikes(headPost.id)
                 .then(res => {
-                    // console.log(res);
                     setLikes(--likes)
                 }, err => console.log(err))
     };
@@ -73,15 +70,13 @@ const SliderPost = (props) => {
                                  alt="slider image"/>
                             <div className="slider-text">
                                 <NavLink to={"/blog/" + headPost.id} className="sl-post-cat"
-                                         href="#">{lang?headPost.category.nameUz:headPost.category.nameRu}</NavLink>
+                                         href="#">{lang ? headPost.category.nameUz : headPost.category.nameRu}</NavLink>
                                 <NavLink to={"/blog/" + headPost.id}
-                                         className="sl-post-title">{lang?headPost.titleUz:headPost.titleRu}</NavLink>
+                                         className="sl-post-title">{lang ? headPost.titleUz : headPost.titleRu}</NavLink>
                                 <div className="meta-autor">
-                                    <img src={author} alt="author image"/>
                                     <div className="meta-tag-area">
-                                        <span className="author-name">Admin</span>
+                                        {/*<span className="author-name">Admin</span>*/}
                                         <span><WiTime9></WiTime9>{headPost.createAt}</span>
-
                                         <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                             {likes}</span>

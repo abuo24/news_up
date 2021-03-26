@@ -87,7 +87,8 @@ const Contact = (props) => {
                     </div>
                     <div className="col-md-6">
                         <div className="row">
-                          <SendMessage lang={langs}/>
+                            <div className="col-12">
+                          <SendMessage lang={langs}/></div>
                         </div>
                     </div>
                 </div>
@@ -100,7 +101,7 @@ class SendMessage extends Component {
 
     componentWillUnmount() {
         this.props.post && postsApi.setLikesAndViews(this.props.post.id).then(
-            res => console.log(res), err => console.log(err)
+            res => "", err => console.log(err)
         )
     }
 
@@ -129,12 +130,14 @@ class SendMessage extends Component {
             <div className="contact-write">
                 <h4>{this.props.lang&&this.props.lang.contact}</h4>
                 <div className="cw-form">
+                    <div className={"row"}>
+                    <div className={"col-12"}>
                     <form onSubmit={this.onSubmit} >
                         <div className="input">
                             <label htmlFor="fname">{this.props.lang&&this.props.lang.name}</label>
                             <input required onChange={e => (this.setState({...this.state, firstName: e.target.value}))} className="for_input_message"  type="text" id="fname" name="fname"/>
                         </div>
-                        <div className="input last-name">
+                        <div className="input last-name" style={{maxWidth: "100%!important"}}>
                             <label htmlFor="sname">{this.props.lang&&this.props.lang.subname}</label>
                             <input required onChange={e => (this.setState({...this.state, lastName: e.target.value}))}  className="for_input_message"  type="text" id="sname" name="sname"/>
                         </div>
@@ -147,6 +150,8 @@ class SendMessage extends Component {
                             <ToastContainer/>
                         </div>
                     </form>
+                    </div>
+                    </div>
                 </div>
             </div>
         )

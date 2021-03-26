@@ -24,8 +24,6 @@ class NewsHead extends Component {
 
     render() {
 
-        console.log(this.props);
-        console.log(this.state);
         let key = 0;
 
 
