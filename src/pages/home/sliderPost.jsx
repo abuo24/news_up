@@ -19,8 +19,6 @@ const SliderPost = (props) => {
         setLang(props.langReducer.type == "uz" ? true : false)
     });
 
-
-
     const headPost = props.post_reducer.popular_posts && props.post_reducer.popular_posts.data && props.post_reducer.popular_posts.data[0];
 
     let [likes, setLikes] = useState(0);
