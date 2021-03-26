@@ -10,9 +10,7 @@ class Layout extends Component {
     };
 
     componentDidMount() {
-        console.log(this.state)
-        console.log(this.props)
-        console.log(localStorage.getItem("lang"))
+
     }
 
     render() {
@@ -27,16 +25,5 @@ class Layout extends Component {
 };
 
 const mstp = state => (state);
-const mdtp = dispatch => ({
-    changeUz: () => {
-        dispatch(langActions.uz())
-    },
-    changeRu: () => {
-        dispatch(langActions.ru())
-    },
-    getCategories: () => {
-        dispatch(getCategories())
-    }
-})
 
-export default connect(mstp, mdtp)(Layout);
+export default connect(mstp, null)(Layout);

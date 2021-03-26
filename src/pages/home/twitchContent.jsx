@@ -65,13 +65,9 @@ class TwitchContent extends Component {
 
         }
 
-        // dt = new Date();
 
         const data1 = endOfWeek(d)
-        console.log(data1)
-        // console.log(data1)
         const data = data1&&(data1.getFullYear().toString()+"."+data1.getMonth()+1+"."+data1.getDay().toString)
-        console.log(data)
         const getMiniCardsPopular = list && list.sort((a) => data < a.createAt&&a.createAt.slice(0,11) ? 1 : -1).slice(1, 6).map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
                       title={this.state.lang ? item.titleUz : item.titleRu}
@@ -89,8 +85,6 @@ class TwitchContent extends Component {
             slidesToShow: 1,
             slidesToScroll: 1,
         };
-
-        // const {type} = this.props.langReducer;
 
         return (
             <div className="twich-content-area">

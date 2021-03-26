@@ -160,14 +160,14 @@ const Item = ({id, title, viewsCount, createAt, likesCount}) => {
         !toogle ? postsApi.setLikes(id)
                 .then(
                     res => {
-                        console.log(res);
+
                         setLikes(++likes)
                     }
                     ,
                     err => console.log(err))
             : postsApi.setDisLikes(id)
                 .then(res => {
-                    console.log(res);
+                    c
                     setLikes(--likes)
                 }, err => console.log(err))
     }

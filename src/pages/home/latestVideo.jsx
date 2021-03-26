@@ -28,7 +28,6 @@ const LatestVideo = (props) => {
         }]
     });
 
-    console.log(props.posts && props.posts.data && props.posts.data.news);
 
     const [videos, setVideos] = useState(props.posts && props.posts.data && props.posts.data.news)
     const [lang, setLang] = useState(true)
