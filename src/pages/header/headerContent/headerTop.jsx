@@ -9,7 +9,6 @@ import {
 import {weatherApi} from "../../../api/weatherApi";
 
 const HeaderTop = (props) => {
-
     const [weather, setWeather] = useState({});
     const [date, setDate] = useState({
         currentDateTime: new Date().toDateString()
