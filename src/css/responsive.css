@@ -1012,6 +1012,8 @@
 
     .sm-slider-text {
         bottom: 20px;
+        font-size: 20px!important;
+        width: 80%!important;
     }
 
     .sm-slider-text .meta-autor {
@@ -1553,5 +1555,12 @@
     }
     .send-btn{
         max-width: 300px!important;
+    }
+}
+@media screen and (max-width: 500px){
+    .sl-post-title {
+        bottom: 20px;
+        font-size: 15px!important;
+        width: 80%!important;
     }
 }

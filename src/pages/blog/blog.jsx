@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import BlogEnter from "./BlogContent/blogEnter";
 import LatestVideo from "../home/latestVideo";
 import FitnessArea from "../home/fitnessArea";
+import {bindActionCreators} from "redux";
+import {allPosts} from "../../redux/actions/shortPostApi";
+import {connect} from "react-redux";
 
-const Blog = () => {
+const Blog = (props) => {
+    useEffect(()=>{
+        props.allPosts();
+    },[])
     return (
         <div>
             <div className={"blog-clm2-fitness"}>
@@ -14,5 +20,5 @@ const Blog = () => {
         </div>
     );
 };
-
-export default Blog;
+const mdtp = (dispatch) =>(bindActionCreators({  allPosts},dispatch))
+export default connect(null,mdtp)(Blog);

@@ -485,13 +485,22 @@ textarea {
 .item-img img {
     height: 215px;
     width: 100%;
+    object-fit: cover!important;
 }
 
 .head-img {
     height: 650px !important;
     min-width: 100%;
 }
-
+.h-social-area span {
+    /*padding: .3px!important;*/
+    display: inline-block;
+    margin: 0!important;
+    transition: .4s ease all;
+}
+.h-social-area span:hover {
+    color: #EC5F25;
+}
 @media only screen and (max-width: 600px) {
     .head-img {
         height: 400px !important;

@@ -88,7 +88,7 @@ const Contact = (props) => {
                     <div className="col-md-6">
                         <div className="row">
                             <div className="col-12">
-                          <SendMessage lang={langs}/></div>
+                          <SendMessage lang={langs} uz={lang}/></div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ class SendMessage extends Component {
         message: ""
     }
 
-    note = () => toast.success("Saqlandi")
+    note = () => this.props.uz&&this.props.uz?toast.success("Saqlandi"):toast.success("Сохранено")
 
     onSubmit = (e) => {
         e.preventDefault()

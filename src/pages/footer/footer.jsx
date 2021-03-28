@@ -167,7 +167,6 @@ const Item = ({id, title, viewsCount, createAt, likesCount}) => {
                     err => console.log(err))
             : postsApi.setDisLikes(id)
                 .then(res => {
-                    c
                     setLikes(--likes)
                 }, err => console.log(err))
     }
