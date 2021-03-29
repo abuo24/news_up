@@ -83,9 +83,9 @@ class BlogContentItem extends Component {
                     <span className={"p-1"}>
                       {this.props.post &&
                         this.props.post.viewsCount &&
-                        this.props.post.viewsCount !== null &&
-                        this.props.post.viewsCount !== undefined &&
-                        this.props.post.viewsCount}
+                        this.props.post.viewsCount != null?
+                          (this.props.post.viewsCount != undefined &&
+                        this.props.post.viewsCount):"0"}
                     </span>
                     <span className={"p-2"}>{this.state.lang?"Ulashish":"Делиться"}</span>
                     <span onClick={()=>{navigator.clipboard.writeText(window.location.href)
