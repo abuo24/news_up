@@ -112,7 +112,7 @@ class NewsItem extends Component {
                     <h4>{this.state && this.state.category && this.state.lang ? this.state.category && this.state.category.nameUz : this.state.category && this.state.category.nameRu}</h4>
                 </div>{key !== 0 ?<>
                 <div className="row">
-                     getMiddleHomeCards
+                     {getMiddleHomeCards}
                 </div>
                 <nav aria-label="...">
                         <ul className="pagination">
