@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import ShortNewsHead from "./shortNewsHead";
 
 import Slider from "react-slick";
+import Links from "./links";
 
 const ShortNews = (props) => {
 
@@ -34,23 +35,7 @@ const ShortNews = (props) => {
                 <Slider {...settings} className={"row"}>
                     {getMIniNews}
                 </Slider>
-                <div className="h1-shrt-connected row d-flex justify-content-center">
-                    <div className="col-6 col-md-2 col-sm-4">
-                        <a href="#">FACEBOOK</a>
-                    </div>
-                    <div className={"col-6 col-md-2  col-sm-4"}>
-                        <a href="#">Twitter</a>
-                    </div>
-                    <div className={"col-6 col-md-2  col-sm-4"}>
-                        <a href="#">linkedin</a>
-                    </div>
-                    <div className={"col-6 col-md-2 col-sm-4"}>
-                        <a href="#">Instagram</a>
-                    </div>
-                    <div className={"col-6 col-md-2 col-sm-4"}>
-                        <a href="#">YOUTUBE</a>
-                    </div>
-                </div>
+              <Links/>
             </div>
         </div>
 

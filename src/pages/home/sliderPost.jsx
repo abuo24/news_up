@@ -74,7 +74,7 @@ const SliderPost = (props) => {
                                 <div className="meta-autor">
                                     <div className="meta-tag-area">
                                         {/*<span className="author-name">Admin</span>*/}
-                                        <span><WiTime9></WiTime9>{headPost.createAt}</span>
+                                        <span><WiTime9></WiTime9>{headPost.createAt.slice(0,16)}</span>
                                         <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                             {likes}</span>
@@ -136,7 +136,7 @@ const SlideItemHeader = ({id, img, category, title, date, like, comment}) => {
                 <div className="clearfix"></div>
                 <div className="meta-autor">
                     <div className="meta-tag-area">
-                        <span><WiTime9></WiTime9>{date}</span>
+                        <span><WiTime9></WiTime9>{date.slice(0,16)}</span>
                         <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                             {likes}</span>

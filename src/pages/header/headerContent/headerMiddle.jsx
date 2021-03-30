@@ -15,7 +15,8 @@ const HeaderMiddle = () => {
                         </div>
                         <div className={"col-md-8 col-sm-8 col-xs-12"}>
                             <div className="h-banner-area">
-                                <Link to={'/'}><img src={banner} alt="banner"/></Link>
+                                {/*bannerni yuklash kk*/}
+                                {/*<Link to={'/'}><img src={banner} alt="banner"/></Link>*/}
                             </div>
                         </div>
                     </div>

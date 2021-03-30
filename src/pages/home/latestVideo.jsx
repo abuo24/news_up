@@ -41,7 +41,7 @@ const LatestVideo = (props) => {
     useEffect(() => {
             setLang(props.langReducer.type == "uz" ? true : false)
             setLangs(props.langReducer.lang)
-            setVideos(props.video_post_reducer.posts && props.video_post_reducer.posts.data && props.video_post_reducer.posts.data.news)
+            setVideos(props.video_post_reducer.posts && props.video_post_reducer.posts.data && props.video_post_reducer.posts.data.videos)
         }
     )
 
@@ -51,11 +51,12 @@ const LatestVideo = (props) => {
                 <div className="letest-video">
                     <h1 className="d-block for-latest-vidtext">{langs.latestVid}</h1>
                     <NavLink className="view-all d-block" to={"/videos"}>{langs.reedMore}</NavLink>
-                    <Slider {...settings}
+                    {videos&&videos.length>3?<Slider {...settings}
                             className="lt-video-slider"
                     >
-                        {getVideos}
-                    </Slider>
+                        getVideos
+                    </Slider>:<div className="lt-video-slider row">
+                        <div className="col-4">{getVideos}</div></div>}
                 </div>
             </div>
         </div>

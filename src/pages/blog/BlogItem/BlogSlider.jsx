@@ -12,11 +12,13 @@ const BlogSlider = (props) => {
         setLang(props.langReducer.type == "uz" ? true : false)
     });
 
+
+
     return (
         <div className={"for_blog_img"} style={{
             height: "300px",
 
-            backgroundColor: "rgba(0,0,0,.9)", opacity: ".8",
+            backgroundColor: "rgba(0,0,0,.9)",
             backgroundImage: `url(${props.post_reducer.post && props.post_reducer.post.data && getFile + props.post_reducer.post.data.headAttachment.hashId})`,
             backroundPosition: "center",
             backgroundPosition: 'center',
@@ -28,10 +30,8 @@ const BlogSlider = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="blg-slider-text text-center">
-                            <NavLink to={"/"}
-                                     className="blg-post-cat  text-center">{lang ? "BOSH SAHIFA" : "ГЛАВНЫЙ"}</NavLink>
                             <div className="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-                                <a href="#"
+                                <a
                                    className="blog-post-title  text-center">{props.post_reducer.post && props.post_reducer.post.data && lang ? props.post_reducer.post && props.post_reducer.post.data && props.post_reducer.post.data.titleUz : props.post_reducer.post && props.post_reducer.post.data && props.post_reducer.post.data.titleRu}</a>
                             </div>
                         </div>

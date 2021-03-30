@@ -34,6 +34,7 @@ class LatestVideoItem extends Component {
                 <div
                     onClick={this.showModal}
                     className={"mx-4 text-center text-white"}>{this.props.title}</div>
+
                 <Modal
                     title={this.props.title}
                     visible={this.state.visible}
@@ -44,7 +45,9 @@ class LatestVideoItem extends Component {
                 >
                    <iframe src={this.props.link}
                             width={"100%"}
-                            height={"200px"}
+                           height={"300px"}
+                            style={{maxWidth:"600px",maxHeigth:"400px"}}
+
                             title={this.props.title} frameBorder="0"
                         />
                 </Modal>

@@ -3,10 +3,11 @@ import {
     AiFillYoutube, AiOutlineInstagram,
     AiOutlineTwitter,
     BiTimer,
-    FaFacebookF,
+    FaFacebookF, FaTelegramPlane, FaTwitter,
     IoSunnyOutline
 } from "react-icons/all";
 import {weatherApi} from "../../../api/weatherApi";
+import {links} from "../../../server/links";
 
 const HeaderTop = (props) => {
     const [weather, setWeather] = useState({});
@@ -15,15 +16,19 @@ const HeaderTop = (props) => {
     });
 
     useEffect(() => {
-        weatherApi.getWeather().then(
-            res => {
-                setWeather({...res})
-            }
-        ).catch(
-            err => {
-                console.log(err)
-            }
-        )
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            weatherApi.getWeather(position.coords.latitude, position.coords.longitude).then(
+                res => {
+                    setWeather({...res})
+                }
+            ).catch(
+                err => {
+                    console.log(err)
+                }
+            )
+        });
+
     }, []);
 
 
@@ -38,7 +43,6 @@ const HeaderTop = (props) => {
                                 <span className={"h-date"}>
                                     {date.currentDateTime}
                                   </span>
-                                <span><IoSunnyOutline/></span>
                                 <span
                                     className={"h-weather"}>{weather.data && weather.data.main && Math.floor(weather.data.main.temp) - 273}<sup>o</sup></span>
                             </div>
@@ -48,20 +52,23 @@ const HeaderTop = (props) => {
                         <div className={"col-md-6 col-sm-6 col-xs-12"}>
                             <div className={"h-social-area"}>
                                 <span>
-                                    <a href="https://facebook.com/"  target={"_blank"}>
+                                    <a href={links.facebook}  target={"_blank"}>
                                     <FaFacebookF/>
                                     </a>
                                 </span>
-                                <span><a href="https://twitter.com/" target={"_blank"}>
-                                    <AiOutlineTwitter/>
+                                <span><a href={links.telegram} target={"_blank"}>
+                                    <FaTelegramPlane/>
+                                    </a>
+                                </span><span><a href={links.twitter} target={"_blank"}>
+                                    <FaTwitter/>
                                     </a>
                                 </span>
                                 <span>
-                                    <a href="https://youtube.com/" target={"_blank"}>
+                                    <a href={links.youtube} target={"_blank"}>
                                     <AiFillYoutube/></a>
                                 </span>
                                 <span>
-                                    <a href="https://instagram.com/"  target={"_blank"}>
+                                    <a href={links.instagram}  target={"_blank"}>
                                     <AiOutlineInstagram/>
                                      </a>
                                 </span>

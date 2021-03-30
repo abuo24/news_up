@@ -45,7 +45,7 @@ const HomeCard = ({to, img, title, date, views, like, comment, content}) => {
                         { likes}</span>
                     <span><FaComment/>{comment == undefined ? 0 : comment.length}</span>
                 </div>
-                <p className="df-text text-truncate"  dangerouslySetInnerHTML={{ __html: content.slice(0,100) }}></p>
+                <p className="df-text text-truncate"  dangerouslySetInnerHTML={{ __html: content.slice(0,30) }}></p>
             </div>
         </div>
     )

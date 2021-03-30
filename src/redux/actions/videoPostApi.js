@@ -7,8 +7,8 @@ export function allVideoPosts() {
         type:"GET_VIDEO_POSTS",
         payload: req
     }
-}export function allVideos() {
-    const req = axiosInstance.get("/videonews/all")
+}export function allVideos(page=0,size=8) {
+    const req = axiosInstance.get("/videonews/all?page="+page+"&size="+size)
         .then(res => res.data);
     return {
         type:"GET_VIDEOS",

@@ -17,7 +17,7 @@ const BlogEnter = (props) => {
         }
     )
 
-    const getBlogs = props.post_reducer&&props.post_reducer.posts&&props.post_reducer.posts.data&&props.post_reducer.posts.data.map((item, key)=>(
+    const getBlogs = props.post_reducer&&props.post_reducer.posts&&props.post_reducer.posts.data&&props.post_reducer.posts.data.slice(0,10).map((item, key)=>(
         <BlogEnterItem category={lang?item.category.nameUz:item.category.nameRu} img={getFile+item.headAttachment.hashId} comment={item.comments} date={item.createAt} title={lang?item.titleUz:item.titleRu} to={"/blog/"+item.id} key={key}/>
         ))
 
@@ -47,7 +47,7 @@ const BlogEnterItem = ({img, category, date, comment, to, title}) => {
                 <div className="trd-post-info">
                     <div className="trd-desc-crumbs crmbs-one">
                         <span className="trd-cat">{category}<AiTwotoneRightCircle/></span>
-                        <span><BiCalendarAlt/>{date}</span>
+                        <span><BiCalendarAlt/>{date.slice(0,16)}</span>
                         <span><FaComment/>{comment===undefined?0:comment.length}</span>
                     </div>
                     <NavLink to={to} className="trd-post-title">

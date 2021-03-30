@@ -109,7 +109,7 @@ class SendMessage extends Component {
         firstName: "",
         lastName: "",
         message: ""
-    }
+    };
 
     note = () => this.props.uz&&this.props.uz?toast.success("Saqlandi"):toast.success("Сохранено")
 

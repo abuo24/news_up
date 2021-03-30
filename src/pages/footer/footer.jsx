@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import {postsApi} from "../../redux/service/postsApi";
 
 import {IconContext} from "react-icons";
+import {links} from "../../server/links";
 
 const Footer = (props) => {
 
@@ -32,7 +33,7 @@ const Footer = (props) => {
                     <div className={"row"}>
                         <div className={"col-xs-12"}>
                             <div className={"footer-logo"}>
-                                <a href="#">NewsUpdate</a>
+                                <a href="#">Doim.Uz</a>
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,7 @@ const Footer = (props) => {
                             </div>
                             <div className={"col-md-3 col-sm-3 col-xs-12"}>
                                 <div className={"widget-twitter-post"}>
-                                    <h4 className={"ft-widget-title"}>Twitter</h4>
+                                    <h4 className={"ft-widget-title"}>Ijtimoiy</h4>
                                     <div className={"widget-twitter-item"}>
                                         <div className={"wti-post-icon"}>
                                             <IconContext.Provider style={{}}
@@ -131,9 +132,12 @@ const Footer = (props) => {
                 <div className={"container"}>
                     <div className={"row"}>
                         <p>Copyright@2021 by <a className=" link text-white text-bold" style={{}}
-                                                href="https://t.me/coderr24" target="_blank">Yunusjonov</a></p>
-
+                                                href={"mailto:" + links.mail} target="_blank">{links.mail}</a>
+                            <span className={"text-white"}>  | Created by </span><a
+                                className=" link text-white text-bold" style={{}}
+                                href="https://t.me/coderr24" target="_blank">Yunusjonov</a></p>
                     </div>
+
                 </div>
             </div>
         </footer>

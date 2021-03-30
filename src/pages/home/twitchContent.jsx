@@ -2,11 +2,12 @@ import React, {Component, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import {
+    AiOutlineYoutube,
     BsFillHeartFill,
     BsHeart,
     FaComment,
     FaEnvelope,
-    FiInstagram,
+    FiInstagram, FiTwitter,
     GrYoutube,
     IoLogoTwitter,
     WiTime9
@@ -18,6 +19,7 @@ import Slider from "react-slick";
 import {bindActionCreators} from "redux";
 import {getCategories} from "../../redux/actions/categoryApi";
 import {postsApi} from "../../redux/service/postsApi";
+import {links} from "../../server/links";
 
 class TwitchContent extends Component {
 
@@ -85,6 +87,7 @@ class TwitchContent extends Component {
             slidesToShow: 1,
             slidesToScroll: 1,
         };
+        const count = this.props.post_reducer&&this.props.post_reducer.count&&this.props.post_reducer.count.data;
 
         return (
             <div className="twich-content-area">
@@ -127,21 +130,27 @@ class TwitchContent extends Component {
                         <div className="col-md-4 col-sm-4">
                             <div className="side-bar">
                                 <div className="widget widget-social">
-                                    <div className="widget-fb p-2">
-                                        <FiInstagram></FiInstagram>
-                                        <h4>4,000</h4>
+                                   <div className="widget-fb p-2">
+                                       <a href={links.instagram} target={"_blank"}>
+                                       <FiInstagram style={{fontSize:"20px"}}/>
+                                        <h4>{count&&count.instagram&&count.instagram}+</h4>
                                         <h6>{this.state.langs && this.state.langs.fanat}</h6>
-                                    </div>
-                                    <div className="widget-twitter p-2">
-                                        <IoLogoTwitter></IoLogoTwitter>
-                                        <h4>3,000</h4>
+                                       </a></div>
+
+                                   <div className="widget-twitter p-2">
+                                       <a href={links.twitter}>
+                                       <FiTwitter style={{fontSize:"20px"}}/>
+                                        <h4>{count&&count.twitter&&count.twitter}+</h4>
                                         <h6>{this.state.langs && this.state.langs.seens}</h6>
-                                    </div>
-                                    <div className="widget-g-plus p-2">
-                                        <GrYoutube></GrYoutube>
-                                        <h4>2,000</h4>
+                                       </a> </div>
+
+                                   <div className="widget-g-plus p-2">
+                                       <a href={links.youtube}>
+                                       <AiOutlineYoutube  style={{fontSize:"20px"}}/>
+                                        <h4>{count&&count.youtube&&count.youtube}+</h4>
                                         <h6>{this.state.langs && this.state.langs.sub}</h6>
-                                    </div>
+                                       </a> </div>
+
                                 </div>
 
                                 <div className="widget widget-most-populer">
@@ -210,7 +219,7 @@ const HeadItem = ({post, content, title, name}) => {
                               href="#">{name && name}</Link>
                         {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
-                                <span><WiTime9></WiTime9>{post && post.createAt}</span>
+                                <span><WiTime9></WiTime9>{post && post.createAt.slice(0,16)}</span>
                                 <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                     {likes}</span>

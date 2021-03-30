@@ -1,10 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {AiOutlineYoutube, FaComment, FaFacebookF, FaTwitter, WiTime9} from "react-icons/all";
+import {
+    AiOutlineYoutube,
+    FaComment,
+    FaFacebookF,
+    FaInstagram,
+    FaTelegramPlane,
+    FaTwitter,
+    WiTime9
+} from "react-icons/all";
 import {connect} from "react-redux";
 import {getFile} from "../../../server/host";
 import {NavLink} from "react-router-dom";
 import {IconContext} from "react-icons";
 import {IoPlayOutline, IoTrashOutline, RiDeleteBin5Line} from "react-icons/all";
+import {bindActionCreators} from "redux";
+import {counts} from "../../../redux/actions/postApi";
+import post_reducer from "../../../redux/reducers/post_reducer";
 
 const HeadSidebar = (props) => {
 
@@ -16,7 +27,11 @@ const HeadSidebar = (props) => {
             }
         }
     );
+    useEffect(()=>{
+        props.counts();
+    },[])
 
+    const count = props.post_reducer&&props.post_reducer.count&&props.post_reducer.count.data;
 
     const [lang, setLang] = useState(true)
     const [langs, setLangs] = useState(props.langReducer.lang)
@@ -31,37 +46,42 @@ const HeadSidebar = (props) => {
             <div className="side-bar">
                 <div className="widget widget-h3-social">
                     <div className="widget-fb">
+                        <a href="https://t.me/doimuzofficial" target={"_blank"}>
                         <IconContext.Provider style={{padding: "7px"}}
                                               value={{color: "white", size: "2em", className: "global-class-name"}}>
                             <div>
                                 <FaFacebookF/>
                             </div>
                         </IconContext.Provider>
-
-                        <h4>156,570</h4>
+                        <h4>{count&&count.facebook&&count.facebook}+</h4>
                         <h6>{langs.fanat}</h6>
+                        </a>
                     </div>
                     <div className="widget-twitter">
+                        <a href="https://t.me/doimuzofficial" target={"_blank"}>
                         <IconContext.Provider style={{padding: "7px"}}
                                               value={{color: "white", size: "2em", className: "global-class-name"}}>
                             <div>
-                                <FaTwitter/>
+                                <FaTelegramPlane/>
                             </div>
                         </IconContext.Provider>
-                        <h4>3,562</h4>
+                        <h4>{count&&count.telegram&&count.telegram}+</h4>
                         <h6>{langs.seens}</h6>
+                    </a>
                     </div>
                     <div className="widget-g-plus">
+                        <a href="https://www.instagram.com/doim.uz/" target={"_blank"}>
 
                         <IconContext.Provider style={{padding: "7px"}}
                                               value={{color: "white", size: "2em", className: "global-class-name"}}>
                             <div>
-                                <AiOutlineYoutube/>
+                                <FaInstagram/>
                             </div>
                         </IconContext.Provider>
 
-                        <h4>29,546</h4>
+                        <h4>{count&&count.instagram&&count.instagram}+</h4>
                         <h6>{langs.sub}</h6>
+                        </a>
                     </div>
                 </div>
                 <div className="widget widget-h3-most-populer">
@@ -96,7 +116,7 @@ const HeadSidebar = (props) => {
                                             <p dangerouslySetInnerHTML={{__html: lang ? item.titleUz : item.titleRu}}></p>
                                         </NavLink>
                                         <div className="wh3-item-fback">
-                                            <span><WiTime9/>{item.createAt}</span>
+                                            <span><WiTime9/>{item.createAt.slice(0,16)}</span>
                                             <span><FaComment/>{item.comments.length}</span>
                                         </div>
                                     </div>
@@ -113,5 +133,6 @@ const HeadSidebar = (props) => {
 };
 
 const mstp = (state) => (state);
+const mdtp = (dispatch) => (bindActionCreators({counts},dispatch));
 
-export default connect(mstp, null)(HeadSidebar);
+export default connect(mstp, mdtp)(HeadSidebar);

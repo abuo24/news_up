@@ -1563,4 +1563,9 @@
         font-size: 15px!important;
         width: 80%!important;
     }
+
+}
+
+.widget-social a:hover {
+    color:#EC5F25!important;
 }
