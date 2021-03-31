@@ -9,6 +9,18 @@ export function getCategories() {
         payload: req
     }
 }
+
+
+export function getCategoriesParents() {
+    const req = axiosInstance.get("/admin/categories/parents")
+        .then(res => res.data);
+
+    return {
+        type: "GET_CATEGORY_PARENTS",
+        payload: req
+    }
+}
+
 export function getNewsByCategoryId(categoryid, page=0) {
     const req = axiosInstance.get("/admin/"+categoryid+"/news?page="+page)
         .then(res => res.data);

@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import LanguageChange from "./languageChange";
 import langReducer from "../../../redux/reducers/langReducer";
 import {bindActionCreators} from "redux";
-import {getCategories} from "../../../redux/actions/categoryApi";
+import {getCategories, getCategoriesParents} from "../../../redux/actions/categoryApi";
 import {IconContext} from "react-icons";
 
 class HeaderBottom extends Component {
@@ -26,6 +26,7 @@ class HeaderBottom extends Component {
             lang: this.props.langReducer.type == "uz" ? true : false,
             langs: this.props.langReducer.lang
         })
+        this.props.getCategoriesParents()
     }
 
     componentDidUpdate() {
@@ -40,6 +41,8 @@ class HeaderBottom extends Component {
 
 
     render() {
+
+        const list = []
         return (
             <div className="header-bottom
              ">
@@ -50,15 +53,12 @@ class HeaderBottom extends Component {
                                 <div className="main-menu">
                                     <nav>
                                         <ul>
-                                            <li><NavLink activeStyle={{
+                                            <li><NavLink  exact activeStyle={{
                                                 color: "#f26522"
                                             }} to={"/"}>{this.state.langs && this.state.langs.home}</NavLink>
                                             </li>
-                                            <li className={c(s.item_nav)}><NavLink activeStyle={{
-                                                color: "#f26522"
-                                            }} to={"/blog"}>{this.state.langs && this.state.langs.blog}</NavLink></li>
 
-                                            <li className={c(s.item_nav)}><NavLink activeStyle={{
+                                            <li className={c(s.item_nav)}><NavLink  exact activeStyle={{
                                                 color: "#f26522"
                                             }} to={"/news"}>{this.state.langs && this.state.langs.all}</NavLink>
                                                 <ul className="drop-menu mega-menu">
@@ -66,7 +66,7 @@ class HeaderBottom extends Component {
                                                         (item) =>
                                                             (
                                                                 <li key={item.id}>
-                                                                    <NavLink
+                                                                    <NavLink exact
                                                                         to={{
                                                                             pathname: "/news/" + item.id,
                                                                         }}>
@@ -77,14 +77,44 @@ class HeaderBottom extends Component {
                                                     }
                                                 </ul>
                                             </li>
-                                            <li className={c(s.item_nav)}><NavLink activeStyle={{
-                                                color: "#f26522"
-                                            }} to={"/about"}>{this.state.langs && this.state.langs.about}</NavLink>
-                                            </li>
+
+                                            {
+                                                this.props.category_reducer && this.props.category_reducer.parents && this.props.category_reducer.parents.data&& this.props.category_reducer.parents.data.map(
+                                                        (item) =>
+                                                            (item!=null? <li className={c(s.item_nav)}>
+                                                                    <NavLink exact
+                                                                        activeStyle={{
+                                                                            color: "#f26522"
+                                                                        }}
+                                                                        to={{
+                                                                            pathname: "/news/" + item.id,
+                                                                        }}>
+                                                                        {this.state.lang ? item.nameUz : item.nameRu}
+                                                                    </NavLink>
+                                                                    <ul className="drop-menu">
+                                                                        {this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map(
+                                                                            (i) => {
+                                                                            if(i.parent!=null?i.parent.id==item.id:false){ return <li key={i.id}>
+                                                                                    <NavLink exact
+                                                                                             to={{
+                                                                                                 pathname: "/news/" + i.id,
+                                                                                             }}>
+                                                                                        {this.state.lang ? i.nameUz : i.nameRu}
+                                                                                    </NavLink>
+                                                                                </li>}
+                                                                            }
+                                                                            )
+                                                                        }
+                                                                    </ul>
+                                                                </li>:null
+                                                            ))
+                                            }
+
                                             <li className={c(s.item_nav)}><NavLink activeStyle={{
                                                 color: "#f26522"
                                             }} to={"/contact"}>{this.state.langs && this.state.langs.contact}</NavLink>
                                             </li>
+
                                             <LanguageChange/>
                                             <li className={c(s.bars)} onClick={() => {
                                                 this.onChange()
@@ -103,7 +133,7 @@ class HeaderBottom extends Component {
                                                     <div><BiMinus/></div>
                                                 </IconContext.Provider>}</li>
                                             {this.state.toogle && <div>
-                                                <li><NavLink activeStyle={{
+                                                <li><NavLink exact activeStyle={{
                                                     color: "#f26522"
                                                 }} to={"/news"}>{this.state.langs && this.state.langs.all}</NavLink>
                                                     <ul className="drop-menu">
@@ -111,7 +141,7 @@ class HeaderBottom extends Component {
                                                             (item) =>
                                                                 (
                                                                     <li key={item.id}>
-                                                                        <NavLink
+                                                                        <NavLink exact
                                                                             to={{
                                                                                 pathname: "/news/" + item.id,
                                                                             }}>
@@ -122,12 +152,39 @@ class HeaderBottom extends Component {
                                                         }
                                                     </ul>
                                                 </li>
-                                                <li><NavLink
-                                                    to={"/blog"}>{this.state.langs && this.state.langs.blog}</NavLink>
-                                                </li>
-                                                <li><NavLink
-                                                    to={"/about"}>{this.state.langs && this.state.langs.about}</NavLink>
-                                                </li>
+
+                                                {
+                                                    this.props.category_reducer && this.props.category_reducer.parents && this.props.category_reducer.parents.data&& this.props.category_reducer.parents.data.map(
+                                                        (item) =>
+                                                            (item!=null? <li>
+                                                                    <NavLink exact
+                                                                             activeStyle={{
+                                                                                 color: "#f26522"
+                                                                             }}
+                                                                             to={{
+                                                                                 pathname: "/news/" + item.id,
+                                                                             }}>
+                                                                        {this.state.lang ? item.nameUz : item.nameRu}
+                                                                    </NavLink>
+                                                                    <ul className="drop-menu">
+                                                                        {this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map(
+                                                                            (i) => {
+                                                                                if(i.parent!=null?i.parent.id==item.id:false){ return <li key={i.id}>
+                                                                                    <NavLink exact
+                                                                                             to={{
+                                                                                                 pathname: "/news/" + i.id,
+                                                                                             }}>
+                                                                                        {this.state.lang ? i.nameUz : i.nameRu}
+                                                                                    </NavLink>
+                                                                                </li>}
+                                                                            }
+                                                                        )
+                                                                        }
+                                                                    </ul>
+                                                                </li>:null
+                                                            ))
+                                                }
+
                                                 <li><NavLink
                                                     to={"/contact"}>{this.state.langs && this.state.langs.contact}</NavLink>
                                                 </li>
@@ -147,6 +204,6 @@ class HeaderBottom extends Component {
 
 const mstp = (state) => (state);
 
-const mdtp = (dispatch) => (bindActionCreators({getCategories}, dispatch))
+const mdtp = (dispatch) => (bindActionCreators({getCategories,getCategoriesParents}, dispatch))
 
 export default connect(mstp, mdtp)(HeaderBottom);

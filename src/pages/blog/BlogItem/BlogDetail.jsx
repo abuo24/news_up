@@ -4,6 +4,7 @@ import BlogContent from "./BlogContent";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import { getPost} from "../../../redux/actions/postApi";
+import {postsApi} from "../../../redux/service/postsApi";
 
 class BlogDetail extends Component {
 
@@ -17,6 +18,7 @@ class BlogDetail extends Component {
 
     componentDidMount() {
         this.props.getPost(this.state.id);
+        postsApi.setLikesAndViews(this.state.id)
     }
 
 

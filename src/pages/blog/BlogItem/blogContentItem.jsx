@@ -10,10 +10,6 @@ import copyToClipboard from "@svc/react-copy-to-clipboard";
 
 class BlogContentItem extends Component {
 
-    componentWillUnmount() {
-        this.props.post && postsApi.setLikesAndViews(this.props.post.id)
-    }
-
     state = {
         author: "",
         authorMail: "",
@@ -136,7 +132,7 @@ class BlogContentItem extends Component {
                                                     alt="related post image"
                                                 />
                                                 <NavLink
-                                                    to={"/blog/" + item.id}
+                                                    to={"/news/" + item.category.id}
                                                     className="related-cat"
                                                 >
                                                     {this.state.lang
@@ -144,7 +140,7 @@ class BlogContentItem extends Component {
                                                         : item.category.nameRu}
                                                 </NavLink>
                                             </div>
-                                            <p className="rlted-date">{item.createAt}</p>
+                                            <p className="rlted-date">{item.createAt.slice(0,16)}</p>
                                             <NavLink to={"/blog/" + item.id}>
                                                 <p className="post-by">
                                                     {this.state.lang ? item.titleUz : item.titleRu}

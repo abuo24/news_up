@@ -5,6 +5,9 @@ import GoogleMapReact from 'google-map-react';
 import {postsApi} from "../../redux/service/postsApi";
 import {toast, ToastContainer} from "react-toastify";
 import {connect} from "react-redux";
+import Links from "../home/shortNews/links";
+import {About} from "../index";
+import {links} from "../../server/links";
 
 const AnyReactComponent = ({text}) => <div>{text}</div>;
 
@@ -28,17 +31,16 @@ const Contact = (props) => {
     )
     return (
         <div>
-
-            <div style={{height: '100vh', width: '100%'}}>
+            <About/>
+            <div style={{height: '60vh', maxWidth: '100%'}}>
                 <GoogleMapReact
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
-                >
-                    <div className={"google-map"}>
+                ><div className={"google-map"}>
                         <div className="map">
                             <AnyReactComponent
                                 lat={41.339328}
-                                lng={69.285872}
+                                long={69.285872}
                                 text="Karta Yuklanyabdi"
                             />
                         </div>
@@ -50,7 +52,7 @@ const Contact = (props) => {
                 <div className="container">
                     <div className="col-md-6">
                         <div className="row">
-                            <div className="contact-info">
+                            <div className="contact-info   mb-2">
                                 <h4>{langs.contact}</h4>
                                 <ul>
                                     <li>
@@ -64,14 +66,18 @@ const Contact = (props) => {
                                         <article>
                                             <HiPhone></HiPhone>
                                             <h5>{langs.phone}</h5>
-                                            <p>+998 93 209 99 24<br/>+998 93 208 99 24</p>
+                                            <a className={"text-dark d-inline-block"} href={"tel:998932099924"}>+998 93 209 99 24</a>
+                                            <a className={"text-dark d-inline-block"} href={"tel:998932089924"}>+998 93 208 99 24</a>
+                                            <p>
+                                                <br/>
+                                            </p>
                                         </article>
                                     </li>
                                     <li>
                                         <article>
                                             <HiMail></HiMail>
                                             <h5>E-mail</h5>
-                                            <p>support@agorastore.com</p>
+                                            <p>{links.mail}</p>
                                         </article>
                                     </li>
                                     <li>
@@ -92,6 +98,9 @@ const Contact = (props) => {
                         </div>
                     </div>
                 </div>
+
+                <Links/>
+                <div className={"my-5"}></div>
             </div>
         </div>
     );
@@ -127,7 +136,7 @@ class SendMessage extends Component {
 
     render() {
         return (
-            <div className="contact-write">
+            <div className="contact-write mb-2">
                 <h4>{this.props.lang&&this.props.lang.contact}</h4>
                 <div className="cw-form">
                     <div className={"row"}>

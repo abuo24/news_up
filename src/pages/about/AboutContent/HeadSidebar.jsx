@@ -27,12 +27,13 @@ const HeadSidebar = (props) => {
             }
         }
     );
+
+    let count = props.post_reducer&&props.post_reducer.count&&props.post_reducer.count.data;
     useEffect(()=>{
         props.counts();
+        count = props.post_reducer&&props.post_reducer.count&&props.post_reducer.count.data;
+
     },[])
-
-    const count = props.post_reducer&&props.post_reducer.count&&props.post_reducer.count.data;
-
     const [lang, setLang] = useState(true)
     const [langs, setLangs] = useState(props.langReducer.lang)
 

@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 import {
     AiOutlineYoutube,
@@ -51,6 +51,7 @@ class TwitchContent extends Component {
         );
 
         const posts = this.props.post_reducer.posts && this.props.post_reducer.posts.data;
+        const posts_date = this.props.post_reducer.popular_date && this.props.post_reducer.popular_date.data;
 
         const getMiniCards = posts && posts.slice(1, 6).map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
@@ -58,22 +59,20 @@ class TwitchContent extends Component {
                       content={this.state.lang ? item.contentUz : item.contentRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
-        const d = new Date();
-        const endOfWeek = (date)=>
-        {
-
-            var lastday = date.getDate() - (date.getDay() - 1) -4;
-            return new Date(date.setDate(lastday));
-
-        }
-
-
-        const data1 = endOfWeek(d)
-        const data = data1&&(data1.getFullYear().toString()+"."+data1.getMonth()+1+"."+data1.getDay().toString)
-        const getMiniCardsPopular = list && list.sort((a) => data < a.createAt&&a.createAt.slice(0,11) ? 1 : -1).slice(1, 6).map((item, key) => (
+          const getMiniCardsPopular = list && list.slice(0, 5)
+            .map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
                       title={this.state.lang ? item.titleUz : item.titleRu}
-                      date={item.createAt && item.createAt.slice(0, 11)}/>));
+                      date={item.createAt && item.createAt.slice(0, 16)}/>));
+
+          console.log(this.props)
+        const getMiniCardsPopularDate = posts_date && posts_date.slice(0, 5)
+            .map((item, key) => (
+                <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
+                          title={this.state.lang ? item.titleUz : item.titleRu}
+                          date={item.createAt && item.createAt.slice(0, 16)}/>));
+
+        console.log(posts_date)
 
         const getMiddleHomeCards = this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map((item, key) => (
             <MiddleHomeCards key={key} category={item}/>));
@@ -98,7 +97,7 @@ class TwitchContent extends Component {
                                 <div className="section-top-bar">
                                     <h4 className={"text-muted"}>{this.state.langs && this.state.langs.latestNews}</h4>
                                     <ul className={"text-muted"}>
-                                        <li role="presentation" className="active d-inline-block">
+                                        <li role="presentation" className="active allnews d-inline-block">
                                             <a aria-controls="all" role="tab"
                                                data-toggle="tab">{this.state.langs && this.state.langs.all}</a>
                                         </li>
@@ -167,7 +166,7 @@ class TwitchContent extends Component {
                                             <div className="section-top-bar">
                                                 <h4>{this.state.langs && this.state.langs.weektop}</h4>
                                             </div>
-                                            {getMiniCardsPopular}
+                                            {getMiniCardsPopularDate}
                                         </div>
                                     </div>
                                 </div>
@@ -214,9 +213,9 @@ const HeadItem = ({post, content, title, name}) => {
                     {post && post.headAttachment && post.headAttachment.hashId != null ?
                         <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
                     <div className="lt-thumb-desc">
-                        <Link className="ln-post-cat"
-                              to={'/blog/' + post && post != null && post != undefined && post.id && post.id != undefined && post.id != null && post.id}
-                              href="#">{name && name}</Link>
+                        <NavLink className="ln-post-cat"
+                              to={`/news/${post && post.category &&post.category.id}`}
+                              href="#">{name && name}</NavLink>
                         {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
                                 <span><WiTime9></WiTime9>{post && post.createAt.slice(0,16)}</span>

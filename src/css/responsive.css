@@ -1554,7 +1554,11 @@
         width: 98%;
     }
     .send-btn{
-        max-width: 300px!important;
+        /*max-width: 330px;*/
+        border: none;
+    }
+    .cw-form form {
+        max-width: 100%!important;
     }
 }
 @media screen and (max-width: 500px){

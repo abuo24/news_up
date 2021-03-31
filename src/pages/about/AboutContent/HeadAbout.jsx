@@ -16,7 +16,7 @@ const HeadAbout = (props) => {
     )
 
 
-    return (<div className="col-md-8 col-sm-8">
+    return (<div className="col-md-12 col-sm-12">
 
             <div className="about-me-text">
                 <p className="abt-text">{
@@ -34,7 +34,6 @@ const HeadAbout = (props) => {
                 </p>
 
             </div>
-            <Links/>
         </div>
     );
 };

@@ -10,11 +10,9 @@ const About = () => {
                 <div className="container">
                     <div className="row">
                         <HeadAbout/>
-                        <HeadSidebar/>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
