@@ -12,14 +12,16 @@ import {postsApi} from "../../redux/service/postsApi";
 const SliderPost = (props) => {
 
     const [posts, setPosts] = useState(null);
+    const [sliders,setSliders] = useState(null);
     const [lang, setLang] = useState(true);
 
     useEffect(() => {
         setPosts(props.post_reducer.posts)
+        setSliders(props.post_reducer.posts);
         setLang(props.langReducer.type == "uz" ? true : false)
     });
 
-    const headPost = props.post_reducer.popular_posts && props.post_reducer.popular_posts.data && props.post_reducer.popular_posts.data[0];
+    const headPost = props.post_reducer.posts && props.post_reducer.posts.data && props.post_reducer.posts.data[0];
 
     let [likes, setLikes] = useState(0);
     const [toogle, setToogle] = useState(false);
@@ -45,14 +47,15 @@ const SliderPost = (props) => {
                     setLikes(--likes)
                 }, err => console.log(err))
     };
-    const getPost = posts != null && posts.data.reverse().slice(0, 3).map((item, key) => (
+    const getPost = sliders&&sliders.data&&sliders.data.slice(1, 4).map((item, key) => (
         <SlideItemHeader
             key={item.id}
             id={item.id}
             img={getFile + item.headAttachment.hashId}
             category={lang ? item.category.nameUz : item.category.nameRu}
+            cid={item.category.id}
             title={lang ? item.titleUz : item.titleRu}
-            date={item.createAt.slice(0, 11)}
+            date={item.createAt.slice(0, 16)}
             like={item.likesCount == null ? 0 : item.likesCount}
             views={item.viewsCount}
             comment={item.comments == null ? 0 : item.comments.length}
@@ -67,13 +70,13 @@ const SliderPost = (props) => {
                                  height={"660px!important"}
                                  alt="slider image"/>
                             <div className="slider-text">
-                                <NavLink to={"/blog/" + headPost.id} className="sl-post-cat"
+                                <NavLink to={"/news/" + headPost.category.id} className="sl-post-cat"
                                          href="#">{lang ? headPost.category.nameUz : headPost.category.nameRu}</NavLink>
                                 <NavLink to={"/blog/" + headPost.id}
                                          className="sl-post-title">{lang ? headPost.titleUz : headPost.titleRu}</NavLink>
                                 <div className="meta-autor">
                                     <div className="meta-tag-area">
-                                        {/*<span className="author-name">Admin</span>*/}
+
                                         <span><WiTime9></WiTime9>{headPost.createAt.slice(0,16)}</span>
                                         <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
@@ -95,7 +98,7 @@ const SliderPost = (props) => {
     )
 };
 
-const SlideItemHeader = ({id, img, category, title, date, like, comment}) => {
+const SlideItemHeader = ({id, cid, img, category, title, date, like, comment}) => {
 
 
     let [likes, setLikes] = useState(0);
@@ -130,7 +133,7 @@ const SlideItemHeader = ({id, img, category, title, date, like, comment}) => {
         <div className="sl-post-item-area item-img mx-0 px-0  ml-0 ml-md-1">
             <img src={img} alt="slider image"/>
             <div className="slider-text sm-slider-text">
-                <NavLink to={"/blog/" + id} className="sl-post-cat" href="#">{category}</NavLink><br/>
+                <NavLink to={"/news/" + cid} className="sl-post-cat" href="#">{category}</NavLink><br/>
                 <NavLink to={"/blog/" + id} className="sl-post-title">
                     {title}</NavLink>
                 <div className="clearfix"></div>

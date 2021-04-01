@@ -36,6 +36,9 @@ const LatestVideo = (props) => {
     const getVideos = videos && videos.map((item, key) => (
         <LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/>
     ));
+    const getVideosCol = videos && videos.map((item, key) => (
+        <div className="col-6 col-md-3"><LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/></div>
+    ));
 
 
     useEffect(() => {
@@ -54,9 +57,9 @@ const LatestVideo = (props) => {
                     {videos&&videos.length>3?<Slider {...settings}
                             className="lt-video-slider"
                     >
-                        getVideos
-                    </Slider>:<div className="lt-video-slider row">
-                        <div className="col-4">{getVideos}</div></div>}
+                        {getVideos}
+                    </Slider>:<div className=" row">
+                        {getVideosCol}</div>}
                 </div>
             </div>
         </div>

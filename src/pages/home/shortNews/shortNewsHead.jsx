@@ -40,11 +40,19 @@ const ShortNewsHead = (props) => {
             <div className="short-news">
                 <h4 className="sn-title">
                     {lang ? props.category.nameUz : props.category.nameRu}</h4>
-                <Slider {...settings} className={"m-0 p-0 setslider"}>
-                    {post && post.shortnews.slice(0, 10).map((item, key) => (
-                        <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu} create={item.createAt}/>
-                    ))}
-                </Slider>
+                {post&&post.shortnews.length>1?
+                    <Slider {...settings} className={"m-0 p-0 setslider"}>
+                        {post && post.shortnews.slice(0, 10).map((item, key) => (
+                            <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu}
+                                           create={item.createAt}/>
+                        ))}
+                    </Slider>:<div className={"m-0 p-0 setslider"}>
+                        {post && post.shortnews.map((item, key) => (
+                            <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu}
+                                           create={item.createAt}/>
+                        ))}
+                    </div>
+                }
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ const ShortNewsItem = ({title, create}) => {
             <p className={"row"}>
                 <div className={"col-8"}>{title}
                 </div>
-                <div className={"muted col-4"}>{create.slice(5,11)}</div>
+                <div className={"muted text-muted col-4"}>{create.slice(5,11)}</div>
             </p>
             <span className="line"></span>
         </>

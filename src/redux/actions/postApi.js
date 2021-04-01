@@ -38,6 +38,14 @@ export function getPopularPosts() {
         payload: req
     }
 }
+export function getPopularPostsByDate() {
+    const req = axiosInstance.get("/admin/news/latest")
+        .then(res => res.data);
+    return {
+        type: "GET_MOST_POSTS_DATE",
+        payload: req
+    }
+}
 
 export function counts() {
     const req= axiosInstance.get("/admin/social/one").then(res =>res.data);

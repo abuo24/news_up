@@ -7,6 +7,7 @@ import {NavLink} from "react-router-dom";
 import {postsApi} from "../../redux/service/postsApi";
 import LatestVideoItem from "../home/latestVideoItem";
 import {allVideos} from "../../redux/actions/videoPostApi";
+import VideoItem from "./VideoItem";
 
 class AllVideos extends Component {
 
@@ -93,7 +94,7 @@ class AllVideos extends Component {
 
     render() {
         const getVideos = this.state.posts&&this.state.posts&&this.state.posts.videos&&this.state.posts.videos.map((item, key) => (
-            <div className="col-12 col-sm-6 col-md-4 col-xl-3 " key={key}><LatestVideoItem
+            <div className="col-12 col-sm-6 col-md-3" key={key}><VideoItem
                 title={this.state.lang ? item.titleUz : item.titleRu} link={item.link}/></div>
         ));
 
@@ -105,14 +106,14 @@ class AllVideos extends Component {
         return (
             <div className="fitness-area mt-4">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-xs-12">
+                    <div className="">
+                        <div className="">
                             <div className="section-top-bar">
                                 <h4>{this.state.lang ? "Barcha videolar" : "Все видео"}</h4>
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div >
 
                         {this.state.posts&&this.state.posts.videos&&this.state.posts.videos.length>0?<> <div className="ft-slider-area">
                                 <div className="row">{getVideos}</div>

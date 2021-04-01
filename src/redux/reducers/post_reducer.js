@@ -10,6 +10,8 @@ export default function (state={}, action) {
             return {...state, post_pages: action.payload}
         case "GET_COUNTS":
             return {...state, count: action.payload}
+        case "GET_MOST_POSTS_DATE":
+            return {...state, popular_date: action.payload}
 
         default:
             return state;

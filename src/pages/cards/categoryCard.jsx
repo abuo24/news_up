@@ -57,6 +57,7 @@ class CategoryCard extends Component {
                                         (<CategoryCardItem id={item.id} key={key}
                                                            img={getFile + item.headAttachment.hashId}
                                                            category={this.state.lang?item.category.nameUz:item.category.nameRu}
+                                                           cid={item.category.id}
                                                            comment={item.comments}
                                                            to={"/blog/" + item.id} like={item.likesCount}
                                                            date={item.createAt.slice(0, 11)}
@@ -71,7 +72,7 @@ class CategoryCard extends Component {
     }
 };
 
-const CategoryCardItem = ({id, to, category, img, title, date, like, comment}) => {
+const CategoryCardItem = ({id, to, category, img, title, date, like,cid, comment}) => {
 
 
     let [likes, setLikes] = useState(0);
@@ -108,7 +109,7 @@ const CategoryCardItem = ({id, to, category, img, title, date, like, comment}) =
             <div className="ft-slider-item">
                 <img src={img} alt="slider image"/>
                 <div className="ft-slider-text">
-                    <NavLink to={to} className="sl-post-cat">{category}</NavLink><br/>
+                    <NavLink to={"/news/"+cid} className="sl-post-cat">{category}</NavLink><br/>
                     <NavLink to={to} className="sl-post-title">{title}</NavLink>
                     <div className="clearfix"></div>
                     <div className="meta-tag-area">

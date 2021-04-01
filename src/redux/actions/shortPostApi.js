@@ -1,8 +1,7 @@
-import axios from "axios";
 import {axiosInstance} from "../../server/host";
 
-export function allPosts() {
-    const req = axiosInstance.get("/admin/shortnews")
+export function allShortPosts(page=0,size=10) {
+    const req = axiosInstance.get("/admin/shortnews?page="+page+"&size="+size)
         .then(res => res.data);
 
     return {
@@ -14,7 +13,7 @@ export function getPostByCategoryId(categoryid) {
     const req = axiosInstance.get("/admin/"+categoryid+"/shortnews/")
         .then(res => res.data);
     return {
-        type:"GET_SHORT_POST_BY_CATEGORIID",
+        type:"GET_SHORT_POST_BY_CATEGORID",
         payload: req
     }
 }
