@@ -1580,7 +1580,6 @@
     }
     ul.drop-menu {
         left: auto!important;
-        /*top: 0!important;*/
         transform: translateY(60px)!important;
         transform: translateX(50%)!important;
     }
