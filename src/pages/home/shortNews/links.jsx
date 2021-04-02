@@ -4,7 +4,7 @@ import {links} from "../../../server/links";
 const Links = () => {
     return (
         <div>
-            <div className="h1-shrt-connected row d-flex justify-content-center">
+            <div className="h1-shrt-connected row d-flex justify-content-center text-center mx-auto">
                 <div className="col-6 col-md-2 col-sm-4">
                     <a href={links.facebook} target={"_blank"}>FACEBOOK</a>
                 </div>
@@ -18,7 +18,7 @@ const Links = () => {
                     <a href={links.instagram} target={"_blank"}>Instagram</a>
                 </div>
                 <div className={"col-6 col-md-2 col-sm-4"}>
-                    <a href={links.youtube} target={"_blank"}>YOUTUBE</a>
+                    <a href={links.youtube} target={"_blank"}>      YOUTUBE</a>
                 </div>
             </div>
         </div>

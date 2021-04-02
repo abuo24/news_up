@@ -98,8 +98,8 @@ class TwitchContent extends Component {
                                     <h4 className={"text-muted"}>{this.state.langs && this.state.langs.latestNews}</h4>
                                     <ul className={"text-muted"}>
                                         <li role="presentation" className="active allnews d-inline-block">
-                                            <a aria-controls="all" role="tab"
-                                               data-toggle="tab">{this.state.langs && this.state.langs.all}</a>
+                                            <NavLink to={"/news"} aria-controls="all" role="tab"
+                                               data-toggle="tab">{this.state.langs && this.state.langs.all}</NavLink>
                                         </li>
                                     </ul>
                                 </div>

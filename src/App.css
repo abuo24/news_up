@@ -546,8 +546,12 @@ textarea {
     .sl-post-title{
         margin: 0 0 -10px!important;
     }
-
 }
+.allnews a:hover {
+    /*display: inline-block!important;*/
+    color: rgba(255,255,255,.95)!important;
+}
+
 ul
 div#preloader {
     background: #fff url('./img/loader.gif') no-repeat scroll center center;
