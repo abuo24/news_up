@@ -29,9 +29,7 @@ class BlogDetail extends Component {
         }
     }
 
-
     render() {
-
         return (
             <div>
                 <BlogSlider/>
