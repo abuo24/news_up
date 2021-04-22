@@ -26,7 +26,6 @@ class NewsHead extends Component {
             lang: this.props.langReducer.type == "uz" ? true : false,
             langs: this.props.langReducer.lang
         });
-        this.props.allPostsByPages();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

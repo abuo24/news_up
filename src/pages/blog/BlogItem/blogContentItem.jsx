@@ -140,7 +140,7 @@ class BlogContentItem extends Component {
                                                         : item.category.nameRu}
                                                 </NavLink>
                                             </div>
-                                            <p className="rlted-date">{item.createAt.slice(0,16)}</p>
+                                            <p className="rlted-date">{item.createAt.slice(0, 16)}</p>
                                             <NavLink to={"/blog/" + item.id}>
                                                 <p className="post-by">
                                                     {this.state.lang ? item.titleUz : item.titleRu}
@@ -359,10 +359,11 @@ class BlogContentItem extends Component {
         );
     }
 }
-const Clips = (props) =>{
+
+const Clips = (props) => {
     const [change, setChange] = copyToClipboard();
 
-    return(
+    return (
         <span
 
             onClick={() => {

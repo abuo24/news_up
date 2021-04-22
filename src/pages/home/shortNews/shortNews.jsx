@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {AiOutlineGooglePlus, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube} from "react-icons/all";
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ShortNewsHead from "./shortNewsHead";
 
@@ -18,7 +16,7 @@ const ShortNews = (props) => {
     })
 
     const [posts, setPosts] = useState();
-    const getMIniNews = props.category_reducer.categories && props.category_reducer.categories && props.category_reducer.categories.map((item, key) => (
+    const getMiniNews = props.category_reducer.categories && props.category_reducer.categories && props.category_reducer.categories.map((item, key) => (
         <ShortNewsHead key={key} category={item}/>));
     const settings = {
         dots: false,
@@ -41,7 +39,7 @@ const ShortNews = (props) => {
     return (<div className="short-news-area">
             <div className="container">
                 <Slider {...settings} className={"row"}>
-                    {getMIniNews}
+                    {getMiniNews}
                 </Slider>
 
                 <div>
@@ -56,7 +54,5 @@ const ShortNews = (props) => {
 };
 
 const mstp = (state) => (state);
-
-// const mdtp = (dispatch) => (bindActionCreators({}, null));
 
 export default connect(mstp, null)(ShortNews);

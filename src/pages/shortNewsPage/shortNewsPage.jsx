@@ -19,8 +19,6 @@ class ShortNewsPage extends Component {
     }
 
     componentDidMount() {
-        this.props.getCategories();
-
         this.setState({
             ...this.state,
             lang: this.props.langReducer.type == "uz" ? true : false,

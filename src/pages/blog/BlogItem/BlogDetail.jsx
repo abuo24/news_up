@@ -26,8 +26,6 @@ class BlogDetail extends Component {
         if (this.state.id !== this.props.match.params.id) {
             this.setState({ id: this.props.match.params.id });
             this.props.getPost(this.props.match.params.id);
-        } else if (this.state.id!==undefined){
-            this.props.getPost(this.state.id);
         }
     }
 

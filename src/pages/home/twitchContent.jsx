@@ -25,7 +25,20 @@ class TwitchContent extends Component {
 
     state = {
         lang: this.props.langReducer.type == "ru" ? false : true,
-        langs: this.props.langReducer.lang
+        langs: this.props.langReducer.lang,
+        categories: null,
+        popular: null,
+        posts: null
+    }
+
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            categories: this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories,
+            popular: this.props.post_reducer && this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data,
+            posts: this.props.post_reducer.posts && this.props.post_reducer.posts.data,
+            posts_date: this.props.post_reducer.popular_date && this.props.post_reducer.popular_date.data
+        })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -40,7 +53,7 @@ class TwitchContent extends Component {
 
     render() {
 
-        const popular = this.props.post_reducer && this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data;
+        const {popular} = this.state;
 
         let list = [];
         popular && popular.map(item => {
@@ -50,8 +63,8 @@ class TwitchContent extends Component {
             }
         );
 
-        const posts = this.props.post_reducer.posts && this.props.post_reducer.posts.data;
-        const posts_date = this.props.post_reducer.popular_date && this.props.post_reducer.popular_date.data;
+        const {posts} = this.state;
+        const {posts_date} = this.state;
 
         const getMiniCards = posts && posts.slice(1, 6).map((item, key) => (
             <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
@@ -59,13 +72,13 @@ class TwitchContent extends Component {
                       content={this.state.lang ? item.contentUz : item.contentRu}
                       date={item.createAt && item.createAt.slice(0, 11)}/>));
 
-          const getMiniCardsPopular = list && list.slice(0, 5)
+        const getMiniCardsPopular = list && list.slice(0, 5)
             .map((item, key) => (
-            <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
-                      title={this.state.lang ? item.titleUz : item.titleRu}
-                      date={item.createAt && item.createAt.slice(0, 16)}/>));
+                <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
+                          title={this.state.lang ? item.titleUz : item.titleRu}
+                          date={item.createAt && item.createAt.slice(0, 16)}/>));
 
-          console.log(this.props)
+        console.log(this.props)
         const getMiniCardsPopularDate = posts_date && posts_date.slice(0, 5)
             .map((item, key) => (
                 <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
@@ -74,7 +87,7 @@ class TwitchContent extends Component {
 
         console.log(posts_date)
 
-        const getMiddleHomeCards = this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories.map((item, key) => (
+        const getMiddleHomeCards = this.state.categories && this.state.categories.map((item, key) => (
             <MiddleHomeCards key={key} category={item}/>));
 
         const settings = {
@@ -86,7 +99,7 @@ class TwitchContent extends Component {
             slidesToShow: 1,
             slidesToScroll: 1,
         };
-        const count = this.props.post_reducer&&this.props.post_reducer.count&&this.props.post_reducer.count.data;
+        const count = this.props.post_reducer && this.props.post_reducer.count && this.props.post_reducer.count.data;
 
         return (
             <div className="twich-content-area">
@@ -99,7 +112,7 @@ class TwitchContent extends Component {
                                     <ul className={"text-muted"}>
                                         <li role="presentation" className="active allnews d-inline-block">
                                             <NavLink to={"/news"} aria-controls="all" role="tab"
-                                               data-toggle="tab">{this.state.langs && this.state.langs.all}</NavLink>
+                                                     data-toggle="tab">{this.state.langs && this.state.langs.all}</NavLink>
                                         </li>
                                     </ul>
                                 </div>
@@ -129,26 +142,26 @@ class TwitchContent extends Component {
                         <div className="col-md-4 col-sm-4">
                             <div className="side-bar">
                                 <div className="widget widget-social">
-                                   <div className="widget-fb p-2">
-                                       <a href={links.instagram} target={"_blank"}>
-                                       <FiInstagram style={{fontSize:"20px"}}/>
-                                        <h4>{count&&count.instagram&&count.instagram}+</h4>
-                                        <h6>{this.state.langs && this.state.langs.fanat}</h6>
-                                       </a></div>
+                                    <div className="widget-fb p-2">
+                                        <a href={links.instagram} target={"_blank"}>
+                                            <FiInstagram style={{fontSize: "20px"}}/>
+                                            <h4>{count && count.instagram && count.instagram}+</h4>
+                                            <h6>{this.state.langs && this.state.langs.fanat}</h6>
+                                        </a></div>
 
-                                   <div className="widget-twitter p-2">
-                                       <a href={links.twitter}>
-                                       <FiTwitter style={{fontSize:"20px"}}/>
-                                        <h4>{count&&count.twitter&&count.twitter}+</h4>
-                                        <h6>{this.state.langs && this.state.langs.seens}</h6>
-                                       </a> </div>
+                                    <div className="widget-twitter p-2">
+                                        <a href={links.twitter}>
+                                            <FiTwitter style={{fontSize: "20px"}}/>
+                                            <h4>{count && count.twitter && count.twitter}+</h4>
+                                            <h6>{this.state.langs && this.state.langs.seens}</h6>
+                                        </a></div>
 
-                                   <div className="widget-g-plus p-2">
-                                       <a href={links.youtube}>
-                                       <AiOutlineYoutube  style={{fontSize:"20px"}}/>
-                                        <h4>{count&&count.youtube&&count.youtube}+</h4>
-                                        <h6>{this.state.langs && this.state.langs.sub}</h6>
-                                       </a> </div>
+                                    <div className="widget-g-plus p-2">
+                                        <a href={links.youtube}>
+                                            <AiOutlineYoutube style={{fontSize: "20px"}}/>
+                                            <h4>{count && count.youtube && count.youtube}+</h4>
+                                            <h6>{this.state.langs && this.state.langs.sub}</h6>
+                                        </a></div>
 
                                 </div>
 
@@ -214,11 +227,11 @@ const HeadItem = ({post, content, title, name}) => {
                         <img src={getFile + post.headAttachment.hashId} alt="post thumbnail"/> : <></>}
                     <div className="lt-thumb-desc">
                         <NavLink className="ln-post-cat"
-                              to={`/news/${post && post.category &&post.category.id}`}
-                              href="#">{name && name}</NavLink>
+                                 to={`/news/${post && post.category && post.category.id}`}
+                                 href="#">{name && name}</NavLink>
                         {post != null ? <div className="meta-autor">
                             <div className="meta-tag-area">
-                                <span><WiTime9></WiTime9>{post && post.createAt.slice(0,16)}</span>
+                                <span><WiTime9></WiTime9>{post && post.createAt.slice(0, 16)}</span>
                                 <span onClick={e => (handleChange(e))}>
                         {toogle ? <BsFillHeartFill/> : <BsHeart/>}
                                     {likes}</span>

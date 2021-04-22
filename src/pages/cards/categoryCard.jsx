@@ -1,9 +1,8 @@
 import React, {Component, useEffect, useState} from 'react';
 import {BsFillHeartFill, BsHeart, FaComment, WiTime9} from "react-icons/all";
 import {bindActionCreators} from "redux";
-import {getNewsByCategoryId} from "../../redux/actions/categoryApi";
 import {connect} from "react-redux";
-import {axiosInstanceAdmin, getFile} from "../../server/host";
+import { getFile} from "../../server/host";
 import {NavLink} from "react-router-dom";
 import {postsApi} from "../../redux/service/postsApi";
 
@@ -22,13 +21,6 @@ class CategoryCard extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if (this.state.res === undefined) {
-            axiosInstanceAdmin.get(this.props.id + "/news").then(
-                res => {
-                    this.setState({res});
-                }
-            ).catch(err => console.log(err));
-        }
         if (this.state.lang !== (this.props.langReducer.type=="uz"?true:false)){
             this.setState({
                 ...this.state,

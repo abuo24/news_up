@@ -1,18 +1,16 @@
-import {Component, Suspense} from "react"
+import {Component} from "react"
 import './App.css';
 import {Layout} from "./hoc";
-import {Redirect, Route, Switch} from 'react-router-dom'
+import { Route, Switch} from 'react-router-dom'
 import React from "react";
 import {
     About,
     AllVideos,
-    Blog,
     BlogDetail,
     Contact,
     Home,
     News,
     NewsHead,
-    NotFound,
     ShortNewsHead,
     ShortNewsPage
 } from "./pages";
@@ -40,21 +38,13 @@ class App extends Component {
         this.props.allVideoPosts()
         this.props.allVideos()
         this.props.counts()
-        this.props.allShortPosts()
         this.setState({...this.state, lang: this.props.langReducer.type});
         this.props.getPopularPostsByDate();
         this.props.getPopularPosts().then(res => this.setState({...this.state,isRequest: false}), err => console.log(err));
     }
     componentDidUpdate() {
         if (this.props.langReducer.type!==this.state.lang){
-            this.props.getCategories();
-            this.props.allVideoPosts();
             this.setState({...this.state,lang:this.props.langReducer.type})
-            this.props.allPosts();
-            this.props.counts();
-            this.props.allVideos();
-            this.props.getPopularPosts();
-            this.props.getPopularPostsByDate();
         }
     }
 
