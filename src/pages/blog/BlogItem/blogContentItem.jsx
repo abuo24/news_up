@@ -7,6 +7,7 @@ import {NavLink} from "react-router-dom";
 import {postsApi} from "../../../redux/service/postsApi";
 import {toast, ToastContainer} from "react-toastify";
 import copyToClipboard from "@svc/react-copy-to-clipboard";
+import {getPost} from "../../../redux/actions/postApi";
 
 class BlogContentItem extends Component {
 
@@ -51,6 +52,7 @@ class BlogContentItem extends Component {
                     input => (input.value = "")
                 );
                 this.note()
+                this.props.getPost(this.props.post.id);
             }).catch(err => console.log(err))
     }
 
@@ -379,7 +381,7 @@ const Clips = (props) => {
 }
 const mstp = (state) => (state);
 
-const mdtp = (dispatch) => (bindActionCreators({}, dispatch));
+const mdtp = (dispatch) => (bindActionCreators({getPost}, dispatch));
 
 
 export default connect(mstp, mdtp)(BlogContentItem);
