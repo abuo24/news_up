@@ -16,8 +16,8 @@ const ShortNews = (props) => {
     })
 
     const [posts, setPosts] = useState();
-    const getMiniNews = props.category_reducer.categories && props.category_reducer.categories && props.category_reducer.categories.map((item, key) => (
-        <ShortNewsHead key={key} category={item}/>));
+    const getMiniNews = props.short_post_reducer.head && props.short_post_reducer.head.data.map((item, key) => (
+        <ShortNewsHead key={key} category={item.categorie} posts={item.news}/>));
     const settings = {
         dots: false,
         autoplay: true,

@@ -83,14 +83,12 @@ const CategoryCardItem = ({id, to, category, img, title, date, like,cid, comment
         !toogle ? postsApi.setLikes(id)
                 .then(
                     res => {
-                        console.log(res);
                         setLikes(++likes)
                     }
                     ,
                     err => console.log(err))
             : postsApi.setDisLikes(id)
                 .then(res => {
-                    console.log(res);
                     setLikes(--likes)
                 }, err => console.log(err))
     }

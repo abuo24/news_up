@@ -13,12 +13,13 @@ const ShortNewsHead = (props) => {
     const [lang, setLang] = useState(true);
 
     useEffect(() => {
-        props.getPostByCategoryId(props.category.id)
+        // props.getPostByCategoryId(props.category.id)
         //     .then(
         //     res => setPost(res.payload.data)
         // ).catch(
         //     err => console.log(err)
         // )
+        setPost(props.posts)
         setLang(props.langReducer.type == "uz" ? true : false)
     }, []);
 
@@ -40,21 +41,20 @@ const ShortNewsHead = (props) => {
     return (
         <div className="col-md-12 col-sm-12 col-xs-12">
             <div className="short-news">
-                <h4 className="sn-title">
-                    {lang ? props.category.nameUz : props.category.nameRu}</h4>
-                {/*{post&&post.shortnews.length>1?*/}
-                {/*    <Slider {...settings} className={"m-0 p-0 setslider"}>*/}
-                {/*        {post && post.shortnews.slice(0, 10).map((item, key) => (*/}
-                {/*            <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu}*/}
-                {/*                           create={item.createAt}/>*/}
-                {/*        ))}*/}
-                {/*    </Slider>:<div className={"m-0 p-0 setslider"}>*/}
-                {/*        {post && post.shortnews.map((item, key) => (*/}
-                {/*            <ShortNewsItem key={item.id} title={lang ? item.titleUz : item.titleRu}*/}
-                {/*                           create={item.createAt}/>*/}
-                {/*        ))}*/}
-                {/*    </div>*/}
-                {/*}*/}
+                <h4 className="sn-title">{lang ? props.category.nameUz : props.category.nameRu}</h4>
+                {post&&post.length>1?
+                    <Slider key={25550} {...settings} className={"m-0 p-0 setslider"}>
+                        {post && post.slice(0, 10).map((item, key) => (
+                            <ShortNewsItem key={key} title={lang ? item.titleUz : item.titleRu}
+                                           create={item.createAt}/>
+                        ))}
+                    </Slider>:<div  key={254} className={"m-0 p-0 setslider"}>
+                        {post && post.map((item, key) => (
+                            <ShortNewsItem key={key} title={lang ? item.titleUz : item.titleRu}
+                                           create={item.createAt}/>
+                        ))}
+                    </div>
+                }
             </div>
         </div>
     );

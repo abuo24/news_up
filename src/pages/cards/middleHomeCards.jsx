@@ -8,14 +8,6 @@ import {getFile} from "../../server/host";
 class MiddleHomeCards extends Component {
 
     componentDidMount() {
-        this.props.getNewsByCategoryId(this.props.category.id)
-            .then(
-                res => {
-                    this.setState({res})
-                }
-            ).catch(err => {
-            console.log(err)
-        });
     }
 
     state = {
@@ -32,7 +24,7 @@ class MiddleHomeCards extends Component {
     }
 
     render() {
-        const getBlogs = this.state.res && this.state.res.payload && this.state.res.payload.data.news.map((item, key) => (
+        const getBlogs = this.props.posts && this.props.posts.map((item, key) => (
             <HomeCard key={key} to={item.id} img={getFile + item.headAttachment.hashId}
                       title={this.state.lang ? item.titleUz : item.titleRu} date={item.createAt.slice(0, 11)}
                       views={item.viewsCount} like={item.likesCount}

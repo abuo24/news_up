@@ -14,13 +14,13 @@ import {
     ShortNewsHead,
     ShortNewsPage
 } from "./pages";
-import {allPosts, counts, getPopularPosts, getPopularPostsByDate} from "./redux/actions/postApi";
+import {allPosts, counts, getHeadPosts, getPopularPosts, getPopularPostsByDate} from "./redux/actions/postApi";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getCategories} from "./redux/actions/categoryApi";
 import 'react-toastify/dist/ReactToastify.css';
 import {allVideoPosts, allVideos} from "./redux/actions/videoPostApi";
-import {allShortPosts} from "./redux/actions/shortPostApi";
+import {allShortPosts, getHeadShortPosts} from "./redux/actions/shortPostApi";
 
 
 class App extends Component {
@@ -37,6 +37,8 @@ class App extends Component {
         this.props.allPosts();
         this.props.allVideoPosts()
         this.props.allVideos()
+        this.props.getHeadPosts()
+        this.props.getHeadShortPosts()
         this.props.counts()
         this.setState({...this.state, lang: this.props.langReducer.type});
         this.props.getPopularPostsByDate();
@@ -77,6 +79,6 @@ class App extends Component {
 
 const mstp = state => (state);
 
-const mdtp = dispatch => (bindActionCreators({allPosts,allVideos, getPopularPosts,allShortPosts, getCategories,allVideoPosts,counts,getPopularPostsByDate}, dispatch));
+const mdtp = dispatch => (bindActionCreators({getHeadShortPosts,getHeadPosts,allPosts,allVideos, getPopularPosts,allShortPosts, getCategories,allVideoPosts,counts,getPopularPostsByDate}, dispatch));
 
 export default connect(mstp, mdtp)(App);

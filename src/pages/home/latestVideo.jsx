@@ -37,7 +37,7 @@ const LatestVideo = (props) => {
         <LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/>
     ));
     const getVideosCol = videos && videos.map((item, key) => (
-        <div className="col-6 col-md-3"><LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/></div>
+        <div key={key} className="col-6 col-md-3"><LatestVideoItem key={key} title={lang ? item.titleUz : item.titleRu} link={item.link}/></div>
     ));
 
 

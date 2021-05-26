@@ -1,10 +1,9 @@
 const ShortNewsItem = ({title, create}) => {
     return (<>
-            <p className={"row"}>
-                <div className={"col-8"}>{title}
-                </div>
-                <div className={"muted text-muted col-4"}>{create.slice(5,11)}</div>
-            </p>
+            <div className={"row mb-3"}>
+                <span className={"col-9"}>{title}</span>
+                <span className={"muted text-muted col-3 text-right"}>{create.slice(5,11)}</span>
+            </div>
             <span className="line"></span>
         </>
     )

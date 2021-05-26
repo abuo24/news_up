@@ -17,3 +17,11 @@ export function getPostByCategoryId(categoryid) {
         payload: req
     }
 }
+export function getHeadShortPosts() {
+    const req = axiosInstance.get("/auth/shortnews/head")
+        .then(res => res.data);
+    return {
+        type:"GET_HEAD_SHORT_POSTS",
+        payload: req
+    }
+}

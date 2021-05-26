@@ -28,7 +28,8 @@ class TwitchContent extends Component {
         langs: this.props.langReducer.lang,
         categories: null,
         popular: null,
-        posts: null
+        posts: null,
+        head_posts: null
     }
 
     componentDidMount() {
@@ -37,7 +38,8 @@ class TwitchContent extends Component {
             categories: this.props.category_reducer && this.props.category_reducer.categories && this.props.category_reducer.categories,
             popular: this.props.post_reducer && this.props.post_reducer.popular_posts && this.props.post_reducer.popular_posts.data && this.props.post_reducer.popular_posts.data,
             posts: this.props.post_reducer.posts && this.props.post_reducer.posts.data,
-            posts_date: this.props.post_reducer.popular_date && this.props.post_reducer.popular_date.data
+            posts_date: this.props.post_reducer.popular_date && this.props.post_reducer.popular_date.data,
+            head_posts: this.props.post_reducer.head && this.props.post_reducer.head.data
         })
     }
 
@@ -78,17 +80,15 @@ class TwitchContent extends Component {
                           title={this.state.lang ? item.titleUz : item.titleRu}
                           date={item.createAt && item.createAt.slice(0, 16)}/>));
 
-        console.log(this.props)
         const getMiniCardsPopularDate = posts_date && posts_date.slice(0, 5)
             .map((item, key) => (
                 <MiniCard key={key} to={"/blog/" + item.id} img={getFile + item.headAttachment.hashId}
                           title={this.state.lang ? item.titleUz : item.titleRu}
                           date={item.createAt && item.createAt.slice(0, 16)}/>));
 
-        console.log(posts_date)
 
-        const getMiddleHomeCards = this.state.categories && this.state.categories.map((item, key) => (
-            <MiddleHomeCards key={key} category={item}/>));
+        const getMiddleHomeCards = this.state.head_posts && this.state.head_posts.map((item, key) => (
+            <MiddleHomeCards key={key} category={item.categorie} posts={item.news}/>));
 
         const settings = {
             dots: false,

@@ -81,7 +81,7 @@ class HeaderBottom extends Component {
                                             {
                                                 this.props.category_reducer && this.props.category_reducer.parents && this.props.category_reducer.parents.data&& this.props.category_reducer.parents.data.map(
                                                         (item) =>
-                                                            (item!=null? <li className={c(s.item_nav)}>
+                                                            (item!=null? <li key={item.id} className={c(s.item_nav)}>
                                                                     <NavLink exact
                                                                         activeStyle={{
                                                                             color: "#f26522"
@@ -156,7 +156,7 @@ class HeaderBottom extends Component {
                                                 {
                                                     this.props.category_reducer && this.props.category_reducer.parents && this.props.category_reducer.parents.data&& this.props.category_reducer.parents.data.map(
                                                         (item) =>
-                                                            (item!=null? <li>
+                                                            (item!=null? <li key={item.id}>
                                                                     <NavLink exact
                                                                              activeStyle={{
                                                                                  color: "#f26522"

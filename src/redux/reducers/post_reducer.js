@@ -4,6 +4,8 @@ export default function (state={}, action) {
             return {...state, post: action.payload}
         case "GET_POSTS":
             return {...state, posts: action.payload}
+        case "GET_NEWS_HEAD":
+            return {...state, head: action.payload}
         case "GET_MOST_POSTS":
             return {...state, popular_posts: action.payload}
         case "GET_POSTS_PAGES":

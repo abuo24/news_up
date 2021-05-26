@@ -38,6 +38,14 @@ export function getPopularPosts() {
         payload: req
     }
 }
+export function getHeadPosts() {
+    const req = axiosInstance.get("/auth/news/head")
+        .then(res => res.data);
+    return {
+        type: "GET_NEWS_HEAD",
+        payload: req
+    }
+}
 export function getPopularPostsByDate() {
     const req = axiosInstance.get("/admin/news/latest")
         .then(res => res.data);

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // export  let  host ="https://news-update-backend.herokuapp.com/api";
-export  let  host ="http://localhost:8080/api";
+export  let  host ="http://localhost:8081/api";
 
 export  let  getFile =`${host}/files/preview/`;
 

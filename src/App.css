@@ -1,42 +1,4 @@
-/*-----------------------------------------------------------------------------------
 
-    Template Name: News Update
-    Template URI:
-    Description: News Update is html5 Responsive template.
-    Author: ThemeInnovation
-    Author URI: https://themeforest.net/user/themeinnovation
-    Version: 1.0
-
------------------------------------------------------------------------------------
-
-    CSS INDEX
-    ===================
-
-    1. Theme default CSS
-    2. Home One
-       2.1 menu
-       2.2 dropdown menu
-       2.3 mobile menu customization
-       2.4 side-bar
-       2.5 Footer
-       2.6 default hover color
-    3. Home Two
-    4. Home three
-    5. Blog Two Column
-    6. BlogPost Details With Sidebar
-    7. BlogPost Details
-    8. About Me
-    9. Contact
-   10. Coming Soon
-   11. Maintenance
-   12. 404
-
-/*----------------------------------------*/
-
-/*  1. Theme default CSS
-/*----------------------------------------*/
-
-/*google font*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Open+Sans:300,400,600,700|Raleway:400,500,600,700');
 
 body {
